@@ -5,7 +5,7 @@ IntakeControlStyles.java,8,4,3,1
 ArticulatedHood.java,302,256,24,22
 Shooter.java,373,282,62,29
 ShootingControlStyles.java,8,4,3,1
-ShootingEnums.java,104,21,70,13
+ShootingEnums.java,104,84,7,13
 Turret.java,309,214,67,28
 BaseController.java,122,71,28,23
 BopItBasicController.java,30,19,8,3
@@ -72,4 +72,4 @@ SupportedVision.java,9,4,3,2
 VisionLEDMode.java,20,6,13,1
 IDistanceSensor.java,24,10,11,3
 RevDistanceSensor.java,92,58,11,23
-Total,7603,4956,1672,975
+Total,7603,5019,1609,975
