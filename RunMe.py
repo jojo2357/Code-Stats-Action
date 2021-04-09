@@ -11,12 +11,9 @@ def find_all_java_files():
     :return:
     """
     all_files = []
-
-    for dir_path, folders, foundFile in os.walk("src/main/java"):
+    for dir_path, folders, foundFile in os.walk("Robot-Code-2021/src/main/java"):
         all_files += [join(dir_path, f) for f in foundFile if isfile(join(dir_path, f)) and f.__contains__(".java")]
-
     logger.info("Found: %d files", len(all_files))
-
     return all_files
 
 
@@ -46,7 +43,6 @@ def read_and_get_the_goods(filename: str):
 
 if __name__ == '__main__':
     # Test prints
-
     # Set the logger
     # noinspection PyArgumentList
     logging.basicConfig(format="[{asctime}] :--{levelname:-^9s}--: [{funcName}()] {message}",
@@ -54,18 +50,23 @@ if __name__ == '__main__':
                         style="{")
     logger = logging.getLogger()
     logger.setLevel(10)
-
     # Get a list of all the dat files
     ALL_FILES = find_all_java_files()
-
-    ALL_ALBUMS_WITH_ARTISTS: Dict[str, list] = {"Unknown Artist": []}
+    ALL_STATS: Dict[str, int] = {"total": 0, "blanks": 0, "comments": 0, "code": 0}
     stat_counter = {"total_songs": 0}
     # Go through each file.
     for dat_file in ALL_FILES:
         print(dat_file, ": ", read_and_get_the_goods(dat_file))
-
-    logger.debug(pprint.pformat(ALL_ALBUMS_WITH_ARTISTS))
-
+    logger.debug(pprint.pformat(ALL_STATS))
     # Now write the text file
     with open("Statistic.out", "w") as file:
         logger.info("Created the text file")
+        for index, statFile in enumerate(ALL_FILES, start=1):
+            goods = read_and_get_the_goods(statFile)
+            file.write(statFile +
+                       "\nTotal: " + str(goods["total"]) +
+                       "\nBlanks: " + str(goods["blanks"]) +
+                       "\nComments: " + str(goods["comments"]) +
+                       "\nCode: " + str(goods["code"]))
+            if index != len(ALL_FILES):
+                file.write("\n===\n")
