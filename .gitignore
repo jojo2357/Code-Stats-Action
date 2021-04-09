@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#FRC-Related Stuff
+Robot-Code-2021/

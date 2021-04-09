@@ -2,7 +2,7 @@ import logging
 import os
 import pprint
 from os.path import join, isfile
-from typing import Tuple, Dict
+from typing import Dict
 
 
 def find_all_java_files():
@@ -12,8 +12,8 @@ def find_all_java_files():
     """
     all_files = []
 
-    for dir_path, folders, file in os.walk("src/main/java"):
-        all_files += [join(dir_path, f) for f in file if isfile(join(dir_path, f)) and f.__contains__(".java")]
+    for dir_path, folders, foundFile in os.walk("src/main/java"):
+        all_files += [join(dir_path, f) for f in foundFile if isfile(join(dir_path, f)) and f.__contains__(".java")]
 
     logger.info("Found: %d files", len(all_files))
 
@@ -42,6 +42,7 @@ def read_and_get_the_goods(filename: str):
             continue
         out["code"] += 1
     return out
+
 
 if __name__ == '__main__':
     # Test prints
