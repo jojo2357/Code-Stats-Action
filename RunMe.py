@@ -1,6 +1,7 @@
 import logging
 import os
 import pprint
+import sys
 from os.path import join, isfile
 from typing import Dict
 
@@ -50,6 +51,8 @@ def read_and_get_the_goods(filename: str):
 
 
 if __name__ == '__main__':
+    print("Args: ")
+    print(sys.argv)
     # Test prints
     # Set the logger
     # noinspection PyArgumentList
