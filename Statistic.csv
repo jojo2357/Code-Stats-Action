@@ -63,7 +63,7 @@ RobotTelemetry.java,192,112,54,26
 AbstractIMU.java,60,38,10,12
 SupportedIMU.java,8,4,3,1
 WrappedNavX2IMU.java,119,70,29,20
-WrappedPigeonIMU.java,91,54,15,22
+WrappedPigeonIMU.java,90,54,16,20
 BallPhoton.java,175,102,47,26
 GoalLimelight.java,149,116,6,27
 GoalPhoton.java,172,102,43,27
@@ -72,4 +72,4 @@ SupportedVision.java,9,4,3,2
 VisionLEDMode.java,20,6,13,1
 IDistanceSensor.java,24,10,11,3
 RevDistanceSensor.java,92,58,11,23
-Total,7603,5019,1609,975
+Total,7602,5019,1610,973

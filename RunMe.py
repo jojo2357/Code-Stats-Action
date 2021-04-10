@@ -26,6 +26,7 @@ def read_and_get_the_goods(filename: str):
         out["total"] += 1
         if len(line.lstrip()) == 0:
             out["blanks"] += 1
+            logger.debug("BLANK IN " + filename + ": " + str(index))
             continue
         if line.__contains__("/*"):
             in_block_comment = True
@@ -42,6 +43,7 @@ def read_and_get_the_goods(filename: str):
             logger.debug("COMMENT IN " + filename + ": " + str(index))
             out["comments"] += 1
             continue
+        logger.debug("CODE IN " + filename + ": " + str(index))
         out["code"] += 1
     return out
 
@@ -76,6 +78,11 @@ if __name__ == '__main__':
                        "," + str(goods["comments"]) +
                        "," + str(goods["blanks"]))
         file.write("\nTotal" +
+                   "," + str(ALL_STATS["total"]) +
+                   "," + str(ALL_STATS["code"]) +
+                   "," + str(ALL_STATS["comments"]) +
+                   "," + str(ALL_STATS["blanks"]))
+        print("\nTotal" +
                    "," + str(ALL_STATS["total"]) +
                    "," + str(ALL_STATS["code"]) +
                    "," + str(ALL_STATS["comments"]) +
