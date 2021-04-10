@@ -126,7 +126,7 @@ if __name__ == '__main__':
     # Now write the text file
     ALL_DATA = []
     for fileName in ALL_FILES:
-        ALL_DATA.append({"name": fileName, "goods": read_and_get_the_goods(fileName)})
+        ALL_DATA.append({"name": str(fileName).replace("\\", "/"), "goods": read_and_get_the_goods(fileName)})
     for index, goods in enumerate(ALL_DATA, start=1):
         ALL_STATS["total"] += goods["goods"]["total"]
         ALL_STATS["code"] += goods["goods"]["code"]
@@ -156,6 +156,9 @@ if __name__ == '__main__':
                    "," + str(ALL_STATS["code"]) + "," +
                    "," + str(ALL_STATS["comments"]) + "," +
                    "," + str(ALL_STATS["blanks"]) + ",")
+    if not os.path.exists("Statistics"):
+        os.mkdir("Statistics")
+
     ALL_DATA.sort(reverse=True, key=sort_lines)
     export_to_file("Statistic.md", ALL_DATA)
     export_to_file("Statistics/LinesDescending.md", ALL_DATA, totallinelink=REPO_URL + "Statistic/LinesAscending.md/")
