@@ -193,17 +193,17 @@ if __name__ == '__main__':
     export_to_file("Statistics/CommentsAscending.md", ALL_DATA)
 
     ALL_DATA.sort(reverse=True, key=sort_code_prop)
-    export_to_file("Statistics/ProportionCodeDescending.md", ALL_DATA, totalcodelink="Statistics/ProportionCodeAscending.md/")
+    export_to_file("Statistics/ProportionCodeDescending.md", ALL_DATA, propcodelink="Statistics/ProportionCodeAscending.md/")
     ALL_DATA.sort(reverse=False, key=sort_code_prop)
     export_to_file("Statistics/ProportionCodeAscending.md", ALL_DATA)
 
     ALL_DATA.sort(reverse=True, key=sort_blank_prop)
-    export_to_file("Statistics/ProportionBlanksDescending.md", ALL_DATA, totalblanklink="Statistics/ProportionBlanksAscending.md/")
+    export_to_file("Statistics/ProportionBlanksDescending.md", ALL_DATA, propblanklink="Statistics/ProportionBlanksAscending.md/")
     ALL_DATA.sort(reverse=False, key=sort_blank_prop)
     export_to_file("Statistics/ProportionBlanksAscending.md", ALL_DATA)
 
     ALL_DATA.sort(reverse=True, key=sort_comment_prop)
-    export_to_file("Statistics/ProportionCommentsDescending.md", ALL_DATA, totalcommentlink="Statistics/ProportionCommentsAscending.md/")
+    export_to_file("Statistics/ProportionCommentsDescending.md", ALL_DATA, propcommentlink="Statistics/ProportionCommentsAscending.md/")
     ALL_DATA.sort(reverse=False, key=sort_comment_prop)
     export_to_file("Statistics/ProportionCommentsAscending.md", ALL_DATA)
 
