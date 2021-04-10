@@ -68,13 +68,13 @@ def read_and_get_the_goods(filename: str):
     return out
 
 
-def export_to_file(filename: str, ALL_DATA, totallinelink=REPO_URL + "Statistic/LinesDescending.md/",
-                   totalcodelink=REPO_URL + "Statistic/CodeDescending.md/",
-                   propcodelink=REPO_URL + "Statistic/ProportionCodeDescending.md/",
-                   totalcommentlink=REPO_URL + "Statistic/CommentsDescending.md/",
-                   propcommentlink=REPO_URL + "Statistic/ProportionCommentsDescending.md/",
-                   totalblanklink=REPO_URL + "Statistic/BlanksDescending.md/",
-                   propblanklink=REPO_URL + "Statistic/ProportionBlankDescending.md/"):
+def export_to_file(filename: str, ALL_DATA, totallinelink=REPO_URL + "Statistics/LinesDescending.md/",
+                   totalcodelink=REPO_URL + "Statistics/CodeDescending.md/",
+                   propcodelink=REPO_URL + "Statistics/ProportionCodeDescending.md/",
+                   totalcommentlink=REPO_URL + "Statistics/CommentsDescending.md/",
+                   propcommentlink=REPO_URL + "Statistics/ProportionCommentsDescending.md/",
+                   totalblanklink=REPO_URL + "Statistics/BlanksDescending.md/",
+                   propblanklink=REPO_URL + "Statistics/ProportionBlankDescending.md/"):
     logger.debug("I think the url is: " + REPO_URL)
     with open(filename, "w") as file:
         file.write(
@@ -162,22 +162,22 @@ if __name__ == '__main__':
 
     ALL_DATA.sort(reverse=True, key=sort_lines)
     export_to_file("Statistic.md", ALL_DATA)
-    export_to_file("Statistics/LinesDescending.md", ALL_DATA, totallinelink=REPO_URL + "Statistic/LinesAscending.md/")
+    export_to_file("Statistics/LinesDescending.md", ALL_DATA, totallinelink=REPO_URL + "Statistics/LinesAscending.md/")
     ALL_DATA.sort(reverse=False, key=sort_lines)
     export_to_file("Statistics/LinesAscending.md", ALL_DATA)
 
     ALL_DATA.sort(reverse=True, key=sort_code)
-    export_to_file("Statistics/CodeDescending.md", ALL_DATA, totalcodelink=REPO_URL + "Statistic/CodeAscending.md/")
+    export_to_file("Statistics/CodeDescending.md", ALL_DATA, totalcodelink=REPO_URL + "Statistics/CodeAscending.md/")
     ALL_DATA.sort(reverse=False, key=sort_code)
     export_to_file("Statistics/CodeAscending.md", ALL_DATA)
 
     ALL_DATA.sort(reverse=True, key=sort_blank)
-    export_to_file("Statistics/BlanksDescending.md", ALL_DATA, totalcodelink=REPO_URL + "Statistic/BlanksAscending.md/")
+    export_to_file("Statistics/BlanksDescending.md", ALL_DATA, totalcodelink=REPO_URL + "Statistics/BlanksAscending.md/")
     ALL_DATA.sort(reverse=False, key=sort_blank)
     export_to_file("Statistics/BlanksAscending.md", ALL_DATA)
 
     ALL_DATA.sort(reverse=True, key=sort_comment)
-    export_to_file("Statistics/CommentsDescending.md", ALL_DATA, totalcodelink=REPO_URL + "Statistic/CommentsAscending.md/")
+    export_to_file("Statistics/CommentsDescending.md", ALL_DATA, totalcodelink=REPO_URL + "Statistics/CommentsAscending.md/")
     ALL_DATA.sort(reverse=False, key=sort_comment)
     export_to_file("Statistics/CommentsAscending.md", ALL_DATA)
 
