@@ -103,7 +103,7 @@ if __name__ == '__main__':
             "\n|File|Lines (% total)|Code Lines (% total)|% Code|Comment Lines (% total)|% Comment|Blank Lines (% total)|% Blank|")
         file.write("\n| --- | --- | --- | --- | --- | --- | --- | --- |")
         for index, goods in enumerate(ALL_DATA, start=1):
-            file.write("\n|" + str(goods["name"]).split("\\")[len(str(goods["name"]).split("\\")) - 1] +
+            file.write("\n|" + "[" + str(goods["name"]).split("\\")[len(str(goods["name"]).split("\\")) - 1] + "](https://github.com/" + sys.argv[1] + "/tree/" + sys.argv[2] + "/" + str(goods["name"]).replace("\\", "/") + ")" +
                        "|" + str(goods["goods"]["total"]) + " (" + str(
                 format(100 * goods["goods"]["total"] / ALL_STATS["total"], ".1f")) + "%)" +
                        "|" + str(goods["goods"]["code"]) + " (" + str(
