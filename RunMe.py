@@ -45,40 +45,39 @@ def read_and_get_the_goods(filename: str):
         out["total"] += 1
         if len(line.lstrip()) == 0:
             out["blanks"] += 1
-            logger.debug("BLANK IN " + filename + ": " + str(index))
+            # logger.debug("BLANK IN " + filename + ": " + str(index))
             continue
         if line.__contains__("/*"):
             in_block_comment = True
             if line.lstrip()[0:2] != "/*":
                 out["code"] += 1
                 out["comments"] -= 1
-                logger.debug("CODE IN " + filename + ": " + str(index))
+                # logger.debug("CODE IN " + filename + ": " + str(index))
         if in_block_comment:
             out["comments"] += 1
-            logger.debug("COMMENT IN " + filename + ": " + str(index) + " #" + str(out["comments"]))
+            # logger.debug("COMMENT IN " + filename + ": " + str(index) + " #" + str(out["comments"]))
             if line.__contains__("*/"):
                 in_block_comment = False
             continue
         if line.lstrip()[0:2] == "//":
-            logger.debug("COMMENT IN " + filename + ": " + str(index))
+            # logger.debug("COMMENT IN " + filename + ": " + str(index))
             out["comments"] += 1
             continue
-        logger.debug("CODE IN " + filename + ": " + str(index))
+        # logger.debug("CODE IN " + filename + ": " + str(index))
         out["code"] += 1
     return out
 
 
-def export_to_file(filename: str, ALL_DATA, totallinelink=REPO_URL + "Statistics/LinesDescending.md/",
-                   totalcodelink=REPO_URL + "Statistics/CodeDescending.md/",
-                   propcodelink=REPO_URL + "Statistics/ProportionCodeDescending.md/",
-                   totalcommentlink=REPO_URL + "Statistics/CommentsDescending.md/",
-                   propcommentlink=REPO_URL + "Statistics/ProportionCommentsDescending.md/",
-                   totalblanklink=REPO_URL + "Statistics/BlanksDescending.md/",
-                   propblanklink=REPO_URL + "Statistics/ProportionBlankDescending.md/"):
-    logger.debug("I think the url is: " + REPO_URL)
+def export_to_file(filename: str, ALL_DATA, totallinelink="Statistics/LinesDescending.md/",
+                   totalcodelink="Statistics/CodeDescending.md/",
+                   propcodelink="Statistics/ProportionCodeDescending.md/",
+                   totalcommentlink="Statistics/CommentsDescending.md/",
+                   propcommentlink="Statistics/ProportionCommentsDescending.md/",
+                   totalblanklink="Statistics/BlanksDescending.md/",
+                   propblanklink="Statistics/ProportionBlankDescending.md/"):
     with open(filename, "w") as file:
         file.write(
-            "\n|File|[Lines (% total)](" + totallinelink + ")|[Code Lines (% total)](" + totalcodelink + ")|[% Code](" + propcodelink + ")|[Comment Lines (% total)](" + totalcommentlink + ")|[% Comment](" + propcommentlink + ")|[Blank Lines (% total)](" + totalblanklink + ")|[% Blank](" + propblanklink + ")|")
+            "\n|File|[Lines (% total)](" + REPO_URL + totallinelink + ")|[Code Lines (% total)](" + REPO_URL + totalcodelink + ")|[% Code](" + REPO_URL + propcodelink + ")|[Comment Lines (% total)](" + REPO_URL + totalcommentlink + ")|[% Comment](" + REPO_URL + propcommentlink + ")|[Blank Lines (% total)](" + REPO_URL + totalblanklink + ")|[% Blank](" + REPO_URL + propblanklink + ")|")
         file.write("\n| --- | --- | --- | --- | --- | --- | --- | --- |")
         for index, goods in enumerate(ALL_DATA, start=1):
             file.write("\n|" + "[" + str(goods["name"]).split("/")[
@@ -172,12 +171,12 @@ if __name__ == '__main__':
     export_to_file("Statistics/CodeAscending.md", ALL_DATA)
 
     ALL_DATA.sort(reverse=True, key=sort_blank)
-    export_to_file("Statistics/BlanksDescending.md", ALL_DATA, totalcodelink=REPO_URL + "Statistics/BlanksAscending.md/")
+    export_to_file("Statistics/BlanksDescending.md", ALL_DATA, totalblanklink=REPO_URL + "Statistics/BlanksAscending.md/")
     ALL_DATA.sort(reverse=False, key=sort_blank)
     export_to_file("Statistics/BlanksAscending.md", ALL_DATA)
 
     ALL_DATA.sort(reverse=True, key=sort_comment)
-    export_to_file("Statistics/CommentsDescending.md", ALL_DATA, totalcodelink=REPO_URL + "Statistics/CommentsAscending.md/")
+    export_to_file("Statistics/CommentsDescending.md", ALL_DATA, totalcommentlink=REPO_URL + "Statistics/CommentsAscending.md/")
     ALL_DATA.sort(reverse=False, key=sort_comment)
     export_to_file("Statistics/CommentsAscending.md", ALL_DATA)
 
