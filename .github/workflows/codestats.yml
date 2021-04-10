@@ -15,7 +15,7 @@ jobs:
           python-version: "3.9"
 
       - name: Run the script
-        run: python -m RunMe ${{ GITHUB_REPOSITORY }}
+        run: python -m RunMe ${{ env.GITHUB_REPOSITORY }}
 
       - name: Git Auto Commit
         uses: stefanzweifel/git-auto-commit-action@v4.9.2
