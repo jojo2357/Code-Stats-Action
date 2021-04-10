@@ -25,15 +25,15 @@ def sort_blank(idk_what_this_is):
 
 
 def sort_code_prop(idk_what_this_is):
-    return idk_what_this_is["goods"]["code"]/idk_what_this_is["goods"]["total"]
+    return idk_what_this_is["goods"]["code"] / idk_what_this_is["goods"]["total"]
 
 
 def sort_comment_prop(idk_what_this_is):
-    return idk_what_this_is["goods"]["comments"]/idk_what_this_is["goods"]["total"]
+    return idk_what_this_is["goods"]["comments"] / idk_what_this_is["goods"]["total"]
 
 
 def sort_blank_prop(idk_what_this_is):
-    return idk_what_this_is["goods"]["blanks"]/idk_what_this_is["goods"]["total"]
+    return idk_what_this_is["goods"]["blanks"] / idk_what_this_is["goods"]["total"]
 
 
 def find_all_java_files():
@@ -89,7 +89,7 @@ def export_to_file(filename: str, ALL_DATA, totallinelink="Statistics/LinesDesce
                    propblanklink="Statistics/ProportionBlanksDescending.md/"):
     with open(filename, "w") as file:
         file.write(
-            "\n|File|[Lines (% total)](" + REPO_URL + totallinelink + ")|[Code Lines (% total)](" + REPO_URL + totalcodelink + ")|[% Code](" + REPO_URL + propcodelink + ")|[Comment Lines (% total)](" + REPO_URL + totalcommentlink + ")|[% Comment](" + REPO_URL + propcommentlink + ")|[Blank Lines (% total)](" + REPO_URL + totalblanklink + ")|[% Blank](" + REPO_URL + propblanklink + ")|")
+            "\n|File|[Lines (% total)](" + REPO_URL + totallinelink + ")|[Code Lines](" + REPO_URL + totalcodelink + ")|[% Code](" + REPO_URL + propcodelink + ")|[Comment Lines](" + REPO_URL + totalcommentlink + ")|[% Comment](" + REPO_URL + propcommentlink + ")|[Blank Lines](" + REPO_URL + totalblanklink + ")|[% Blank](" + REPO_URL + propblanklink + ")|")
         file.write("\n| --- | --- | --- | --- | --- | --- | --- | --- |")
         for index, goods in enumerate(ALL_DATA, start=1):
             file.write("\n|" + "[" + str(goods["name"]).split("/")[
@@ -97,14 +97,11 @@ def export_to_file(filename: str, ALL_DATA, totallinelink="Statistics/LinesDesce
                                                                                                        "/") + ")" +
                        "|" + str(goods["goods"]["total"]) + " (" + str(
                 format(100 * goods["goods"]["total"] / ALL_STATS["total"], ".1f")) + "%)" +
-                       "|" + str(goods["goods"]["code"]) + " (" + str(
-                format(100 * goods["goods"]["code"] / ALL_STATS["code"], ".1f")) + "%)" + "|" +
+                       "|" + str(goods["goods"]["code"]) + "|" +
                        str(format(100 * goods["goods"]["code"] / goods["goods"]["total"], ".1f")) + "%" +
-                       "|" + str(goods["goods"]["comments"]) + " (" + str(
-                format(100 * goods["goods"]["comments"] / ALL_STATS["comments"], ".1f")) + "%)" + "|" +
+                       "|" + str(goods["goods"]["comments"]) + "|" +
                        str(format(100 * goods["goods"]["comments"] / goods["goods"]["total"], ".1f")) + "%" +
-                       "|" + str(goods["goods"]["blanks"]) + " (" + str(
-                format(100 * goods["goods"]["blanks"] / ALL_STATS["blanks"], ".1f")) + "%)" + "|" +
+                       "|" + str(goods["goods"]["blanks"]) + "|" +
                        str(format(100 * goods["goods"]["blanks"] / goods["goods"]["total"], ".1f")) + "%|")
         file.write("\n|Total" +
                    "|" + str(ALL_STATS["total"]) +
@@ -148,19 +145,16 @@ if __name__ == '__main__':
     with open("Statistic.csv", "w") as file:
         logger.info("Created the text file")
         file.write(
-            "File,Lines (% total),Code Lines (% total),% Code,Comment Lines (% total),% Comment,Blank Lines (% total),% Blank")
+            "File,Lines (% total),Code Lines,% Code,Comment Lines,% Comment,Blank Lines,% Blank")
         for index, goods in enumerate(ALL_DATA, start=1):
             file.write("\n" + str(goods["name"]).split("\\")[len(str(goods["name"]).split("\\")) - 1] +
                        "," + str(goods["goods"]["total"]) + " (" + str(
                 format(100 * goods["goods"]["total"] / ALL_STATS["total"], ".1f")) + "%)" +
-                       "," + str(goods["goods"]["code"]) + " (" + str(
-                format(100 * goods["goods"]["code"] / ALL_STATS["code"], ".1f")) + "%)" + "," +
+                       "," + str(goods["goods"]["code"]) + "," +
                        str(format(100 * goods["goods"]["code"] / goods["goods"]["total"], ".1f")) + "%" +
-                       "," + str(goods["goods"]["comments"]) + " (" + str(
-                format(100 * goods["goods"]["comments"] / ALL_STATS["comments"], ".1f")) + "%)" + "," +
+                       "," + str(goods["goods"]["comments"]) + "," +
                        str(format(100 * goods["goods"]["comments"] / goods["goods"]["total"], ".1f")) + "%" +
-                       "," + str(goods["goods"]["blanks"]) + " (" + str(
-                format(100 * goods["goods"]["blanks"] / ALL_STATS["blanks"], ".1f")) + "%)" + "," +
+                       "," + str(goods["goods"]["blanks"]) + "," +
                        str(format(100 * goods["goods"]["blanks"] / goods["goods"]["total"], ".1f")) + "%"
                        )
         file.write("\nTotal" +
@@ -193,17 +187,20 @@ if __name__ == '__main__':
     export_to_file("Statistics/CommentsAscending.md", ALL_DATA)
 
     ALL_DATA.sort(reverse=True, key=sort_code_prop)
-    export_to_file("Statistics/ProportionCodeDescending.md", ALL_DATA, propcodelink="Statistics/ProportionCodeAscending.md/")
+    export_to_file("Statistics/ProportionCodeDescending.md", ALL_DATA,
+                   propcodelink="Statistics/ProportionCodeAscending.md/")
     ALL_DATA.sort(reverse=False, key=sort_code_prop)
     export_to_file("Statistics/ProportionCodeAscending.md", ALL_DATA)
 
     ALL_DATA.sort(reverse=True, key=sort_blank_prop)
-    export_to_file("Statistics/ProportionBlanksDescending.md", ALL_DATA, propblanklink="Statistics/ProportionBlanksAscending.md/")
+    export_to_file("Statistics/ProportionBlanksDescending.md", ALL_DATA,
+                   propblanklink="Statistics/ProportionBlanksAscending.md/")
     ALL_DATA.sort(reverse=False, key=sort_blank_prop)
     export_to_file("Statistics/ProportionBlanksAscending.md", ALL_DATA)
 
     ALL_DATA.sort(reverse=True, key=sort_comment_prop)
-    export_to_file("Statistics/ProportionCommentsDescending.md", ALL_DATA, propcommentlink="Statistics/ProportionCommentsAscending.md/")
+    export_to_file("Statistics/ProportionCommentsDescending.md", ALL_DATA,
+                   propcommentlink="Statistics/ProportionCommentsAscending.md/")
     ALL_DATA.sort(reverse=False, key=sort_comment_prop)
     export_to_file("Statistics/ProportionCommentsAscending.md", ALL_DATA)
 
