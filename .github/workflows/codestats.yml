@@ -1,4 +1,4 @@
-name: Generate a list of albums added in the MDRP
+name: Generate a .csv full of code statistics found in the repository
 
 on: push
 
