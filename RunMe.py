@@ -59,9 +59,9 @@ if __name__ == '__main__':
                         style="{")
     logger = logging.getLogger()
     logger.setLevel(10)
-    
+
     logger.debug("Args: ")
-    logger.debug(sys.argv)
+    logger.debug(sys.argv[1])
     # Get a list of all the dat files
     ALL_FILES = find_all_java_files()
     ALL_STATS: Dict[str, int] = {"total": 0, "blanks": 0, "comments": 0, "code": 0}
@@ -69,7 +69,7 @@ if __name__ == '__main__':
     # Now write the text file
     with open("Statistic.csv", "w") as file:
         logger.info("Created the text file")
-        file.write("File,Lines,Code Lines,Comment Lines,Blank Lines")
+        file.write("[File](https://github.com/),Lines,Code Lines,Comment Lines,Blank Lines")
         for index, statFile in enumerate(ALL_FILES, start=1):
             goods = read_and_get_the_goods(statFile)
             ALL_STATS["total"] += goods["total"]
