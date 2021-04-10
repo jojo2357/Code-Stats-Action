@@ -5,6 +5,24 @@ import sys
 from os.path import join, isfile
 from typing import Dict
 
+REPO_URL = ""
+
+
+def sort_lines(idk_what_this_is):
+    return idk_what_this_is["goods"]["total"]
+
+
+def sort_code(idk_what_this_is):
+    return idk_what_this_is["goods"]["code"]
+
+
+def sort_comment(idk_what_this_is):
+    return idk_what_this_is["goods"]["comments"]
+
+
+def sort_blank(idk_what_this_is):
+    return idk_what_this_is["goods"]["blanks"]
+
 
 def find_all_java_files():
     """
@@ -50,6 +68,39 @@ def read_and_get_the_goods(filename: str):
     return out
 
 
+def export_to_file(filename: str, ALL_DATA, totallinelink=REPO_URL + "Statistic/LinesDescending.md/",
+                   totalcodelink=REPO_URL + "Statistic/CodeDescending.md/",
+                   propcodelink=REPO_URL + "Statistic/ProportionCodeDescending.md/",
+                   totalcommentlink=REPO_URL + "Statistic/CommentsDescending.md/",
+                   propcommentlink=REPO_URL + "Statistic/ProportionCommentsDescending.md/",
+                   totalblanklink=REPO_URL + "Statistic/BlanksDescending.md/",
+                   propblanklink=REPO_URL + "Statistic/ProportionBlankDescending.md/"):
+    with open(filename, "w") as file:
+        file.write(
+            "\n|File|[Lines (% total)](" + totallinelink + ")|[Code Lines (% total)](" + totalcodelink + ")|[% Code](" + propcodelink + ")|[Comment Lines (% total)](" + totalcommentlink + ")|[% Comment](" + propcommentlink + ")|[Blank Lines (% total)](" + totalblanklink + ")|[% Blank](" + propblanklink + ")|")
+        file.write("\n| --- | --- | --- | --- | --- | --- | --- | --- |")
+        for index, goods in enumerate(ALL_DATA, start=1):
+            file.write("\n|" + "[" + str(goods["name"]).split("/")[
+                len(str(goods["name"]).split("/")) - 1] + "](" + REPO_URL + str(goods["name"]).replace("\\",
+                                                                                                       "/") + ")" +
+                       "|" + str(goods["goods"]["total"]) + " (" + str(
+                format(100 * goods["goods"]["total"] / ALL_STATS["total"], ".1f")) + "%)" +
+                       "|" + str(goods["goods"]["code"]) + " (" + str(
+                format(100 * goods["goods"]["code"] / ALL_STATS["code"], ".1f")) + "%)" + "|" +
+                       str(format(100 * goods["goods"]["code"] / goods["goods"]["total"], ".1f")) + "%" +
+                       "|" + str(goods["goods"]["comments"]) + " (" + str(
+                format(100 * goods["goods"]["comments"] / ALL_STATS["comments"], ".1f")) + "%)" + "|" +
+                       str(format(100 * goods["goods"]["comments"] / goods["goods"]["total"], ".1f")) + "%" +
+                       "|" + str(goods["goods"]["blanks"]) + " (" + str(
+                format(100 * goods["goods"]["blanks"] / ALL_STATS["blanks"], ".1f")) + "%)" + "|" +
+                       str(format(100 * goods["goods"]["blanks"] / goods["goods"]["total"], ".1f")) + "%|")
+        file.write("\n|Total" +
+                   "|" + str(ALL_STATS["total"]) +
+                   "|" + str(ALL_STATS["code"]) + "| " +
+                   "|" + str(ALL_STATS["comments"]) + "| " +
+                   "|" + str(ALL_STATS["blanks"]) + "| |")
+
+
 if __name__ == '__main__':
     # Test prints
     # Set the logger
@@ -59,6 +110,13 @@ if __name__ == '__main__':
                         style="{")
     logger = logging.getLogger()
     logger.setLevel(10)
+
+    if len(sys.argv) < 2:
+        sys.argv.append("Smaltin/CodeStats")
+    if len(sys.argv) < 3:
+        sys.argv.append("main")
+
+    REPO_URL = "https://github.com/" + sys.argv[1] + "/tree/" + sys.argv[2] + "/"
 
     logger.debug(sys.argv)
     # Get a list of all the java files
@@ -98,28 +156,27 @@ if __name__ == '__main__':
                    "," + str(ALL_STATS["code"]) + "," +
                    "," + str(ALL_STATS["comments"]) + "," +
                    "," + str(ALL_STATS["blanks"]) + ",")
-    with open("Statistic.md", "w") as file:
-        file.write(
-            "\n|File|Lines (% total)|Code Lines (% total)|% Code|Comment Lines (% total)|% Comment|Blank Lines (% total)|% Blank|")
-        file.write("\n| --- | --- | --- | --- | --- | --- | --- | --- |")
-        for index, goods in enumerate(ALL_DATA, start=1):
-            file.write("\n|" + "[" + str(goods["name"]).split("/")[len(str(goods["name"]).split("/")) - 1] + "](https://github.com/" + sys.argv[1] + "/tree/" + sys.argv[2] + "/" + str(goods["name"]).replace("\\", "/") + ")" +
-                       "|" + str(goods["goods"]["total"]) + " (" + str(
-                format(100 * goods["goods"]["total"] / ALL_STATS["total"], ".1f")) + "%)" +
-                       "|" + str(goods["goods"]["code"]) + " (" + str(
-                format(100 * goods["goods"]["code"] / ALL_STATS["code"], ".1f")) + "%)" + "|" +
-                       str(format(100 * goods["goods"]["code"] / goods["goods"]["total"], ".1f")) + "%" +
-                       "|" + str(goods["goods"]["comments"]) + " (" + str(
-                format(100 * goods["goods"]["comments"] / ALL_STATS["comments"], ".1f")) + "%)" + "|" +
-                       str(format(100 * goods["goods"]["comments"] / goods["goods"]["total"], ".1f")) + "%" +
-                       "|" + str(goods["goods"]["blanks"]) + " (" + str(
-                format(100 * goods["goods"]["blanks"] / ALL_STATS["blanks"], ".1f")) + "%)" + "|" +
-                       str(format(100 * goods["goods"]["blanks"] / goods["goods"]["total"], ".1f")) + "%|")
-        file.write("\n|Total" +
-                   "|" + str(ALL_STATS["total"]) +
-                   "|" + str(ALL_STATS["code"]) + "| " +
-                   "|" + str(ALL_STATS["comments"]) + "| " +
-                   "|" + str(ALL_STATS["blanks"]) + "| |")
+    ALL_DATA.sort(reverse=True, key=sort_lines)
+    export_to_file("Statistic.md", ALL_DATA)
+    export_to_file("Statistics/LinesDescending.md", ALL_DATA, totallinelink=REPO_URL + "Statistic/LinesAscending.md/")
+    ALL_DATA.sort(reverse=False, key=sort_lines)
+    export_to_file("Statistics/LinesAscending.md", ALL_DATA)
+
+    ALL_DATA.sort(reverse=True, key=sort_code)
+    export_to_file("Statistics/CodeDescending.md", ALL_DATA, totalcodelink=REPO_URL + "Statistic/CodeAscending.md/")
+    ALL_DATA.sort(reverse=False, key=sort_code)
+    export_to_file("Statistics/CodeAscending.md", ALL_DATA)
+
+    ALL_DATA.sort(reverse=True, key=sort_blank)
+    export_to_file("Statistics/BlanksDescending.md", ALL_DATA, totalcodelink=REPO_URL + "Statistic/BlanksAscending.md/")
+    ALL_DATA.sort(reverse=False, key=sort_blank)
+    export_to_file("Statistics/BlanksAscending.md", ALL_DATA)
+
+    ALL_DATA.sort(reverse=True, key=sort_comment)
+    export_to_file("Statistics/CommentsDescending.md", ALL_DATA, totalcodelink=REPO_URL + "Statistic/CommentsAscending.md/")
+    ALL_DATA.sort(reverse=False, key=sort_comment)
+    export_to_file("Statistics/CommentsAscending.md", ALL_DATA)
+
 
     print("\nTotal" +
           "," + str(ALL_STATS["total"]) +
