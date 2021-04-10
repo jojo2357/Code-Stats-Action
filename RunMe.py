@@ -24,6 +24,18 @@ def sort_blank(idk_what_this_is):
     return idk_what_this_is["goods"]["blanks"]
 
 
+def sort_code_prop(idk_what_this_is):
+    return idk_what_this_is["goods"]["code"]/idk_what_this_is["goods"]["total"]
+
+
+def sort_comment_prop(idk_what_this_is):
+    return idk_what_this_is["goods"]["comments"]/idk_what_this_is["goods"]["total"]
+
+
+def sort_blank_prop(idk_what_this_is):
+    return idk_what_this_is["goods"]["blanks"]/idk_what_this_is["goods"]["total"]
+
+
 def find_all_java_files():
     """
     finds all the dat files in "User_Generated_Files" folder
@@ -180,6 +192,20 @@ if __name__ == '__main__':
     ALL_DATA.sort(reverse=False, key=sort_comment)
     export_to_file("Statistics/CommentsAscending.md", ALL_DATA)
 
+    ALL_DATA.sort(reverse=True, key=sort_code_prop)
+    export_to_file("Statistics/ProportionCodeDescending.md", ALL_DATA, totalcodelink="Statistics/ProportionCodeAscending.md/")
+    ALL_DATA.sort(reverse=False, key=sort_code_prop)
+    export_to_file("Statistics/ProportionCodeAscending.md", ALL_DATA)
+
+    ALL_DATA.sort(reverse=True, key=sort_blank_prop)
+    export_to_file("Statistics/ProportionBlanksDescending.md", ALL_DATA, totalblanklink="Statistics/ProportionBlanksAscending.md/")
+    ALL_DATA.sort(reverse=False, key=sort_blank_prop)
+    export_to_file("Statistics/ProportionBlanksAscending.md", ALL_DATA)
+
+    ALL_DATA.sort(reverse=True, key=sort_comment_prop)
+    export_to_file("Statistics/ProportionCommentsDescending.md", ALL_DATA, totalcommentlink="Statistics/ProportionCommentsAscending.md/")
+    ALL_DATA.sort(reverse=False, key=sort_comment_prop)
+    export_to_file("Statistics/ProportionCommentsAscending.md", ALL_DATA)
 
     print("\nTotal" +
           "," + str(ALL_STATS["total"]) +
