@@ -86,7 +86,7 @@ def export_to_file(filename: str, ALL_DATA, totallinelink="Statistics/LinesDesce
                    totalcommentlink="Statistics/CommentsDescending.md/",
                    propcommentlink="Statistics/ProportionCommentsDescending.md/",
                    totalblanklink="Statistics/BlanksDescending.md/",
-                   propblanklink="Statistics/ProportionBlankDescending.md/"):
+                   propblanklink="Statistics/ProportionBlanksDescending.md/"):
     with open(filename, "w") as file:
         file.write(
             "\n|File|[Lines (% total)](" + REPO_URL + totallinelink + ")|[Code Lines (% total)](" + REPO_URL + totalcodelink + ")|[% Code](" + REPO_URL + propcodelink + ")|[Comment Lines (% total)](" + REPO_URL + totalcommentlink + ")|[% Comment](" + REPO_URL + propcommentlink + ")|[Blank Lines (% total)](" + REPO_URL + totalblanklink + ")|[% Blank](" + REPO_URL + propblanklink + ")|")
