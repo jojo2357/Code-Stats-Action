@@ -51,8 +51,6 @@ def read_and_get_the_goods(filename: str):
 
 
 if __name__ == '__main__':
-    print("Args: ")
-    print(sys.argv)
     # Test prints
     # Set the logger
     # noinspection PyArgumentList
@@ -61,6 +59,9 @@ if __name__ == '__main__':
                         style="{")
     logger = logging.getLogger()
     logger.setLevel(10)
+    
+    logger.debug("Args: ")
+    logger.debug(sys.argv)
     # Get a list of all the dat files
     ALL_FILES = find_all_java_files()
     ALL_STATS: Dict[str, int] = {"total": 0, "blanks": 0, "comments": 0, "code": 0}
