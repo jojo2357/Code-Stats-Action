@@ -161,22 +161,22 @@ if __name__ == '__main__':
 
     ALL_DATA.sort(reverse=True, key=sort_lines)
     export_to_file("Statistic.md", ALL_DATA)
-    export_to_file("Statistics/LinesDescending.md", ALL_DATA, totallinelink=REPO_URL + "Statistics/LinesAscending.md/")
+    export_to_file("Statistics/LinesDescending.md", ALL_DATA, totallinelink="Statistics/LinesAscending.md/")
     ALL_DATA.sort(reverse=False, key=sort_lines)
     export_to_file("Statistics/LinesAscending.md", ALL_DATA)
 
     ALL_DATA.sort(reverse=True, key=sort_code)
-    export_to_file("Statistics/CodeDescending.md", ALL_DATA, totalcodelink=REPO_URL + "Statistics/CodeAscending.md/")
+    export_to_file("Statistics/CodeDescending.md", ALL_DATA, totalcodelink="Statistics/CodeAscending.md/")
     ALL_DATA.sort(reverse=False, key=sort_code)
     export_to_file("Statistics/CodeAscending.md", ALL_DATA)
 
     ALL_DATA.sort(reverse=True, key=sort_blank)
-    export_to_file("Statistics/BlanksDescending.md", ALL_DATA, totalblanklink=REPO_URL + "Statistics/BlanksAscending.md/")
+    export_to_file("Statistics/BlanksDescending.md", ALL_DATA, totalblanklink="Statistics/BlanksAscending.md/")
     ALL_DATA.sort(reverse=False, key=sort_blank)
     export_to_file("Statistics/BlanksAscending.md", ALL_DATA)
 
     ALL_DATA.sort(reverse=True, key=sort_comment)
-    export_to_file("Statistics/CommentsDescending.md", ALL_DATA, totalcommentlink=REPO_URL + "Statistics/CommentsAscending.md/")
+    export_to_file("Statistics/CommentsDescending.md", ALL_DATA, totalcommentlink="Statistics/CommentsAscending.md/")
     ALL_DATA.sort(reverse=False, key=sort_comment)
     export_to_file("Statistics/CommentsAscending.md", ALL_DATA)
 
