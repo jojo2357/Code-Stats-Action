@@ -1,0 +1,12 @@
+{
+  "java": {
+    "startSingleComment": "//",
+    "startBlockComment": "/*",
+    "endBlockComment": "*/"
+  },
+  "py": {
+    "startSingleComment": "#",
+    "startBlockComment": "'''",
+    "endBlockComment": "'''"
+  }
+}

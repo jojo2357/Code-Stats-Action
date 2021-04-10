@@ -128,6 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-#FRC-Related Stuff
-Robot-Code-2021/
-Statistic.out
+#Project-Related
+Statistic.csv
+.idea/
