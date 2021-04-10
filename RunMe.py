@@ -75,6 +75,7 @@ def export_to_file(filename: str, ALL_DATA, totallinelink=REPO_URL + "Statistic/
                    propcommentlink=REPO_URL + "Statistic/ProportionCommentsDescending.md/",
                    totalblanklink=REPO_URL + "Statistic/BlanksDescending.md/",
                    propblanklink=REPO_URL + "Statistic/ProportionBlankDescending.md/"):
+    logger.debug("I think the url is: " + REPO_URL)
     with open(filename, "w") as file:
         file.write(
             "\n|File|[Lines (% total)](" + totallinelink + ")|[Code Lines (% total)](" + totalcodelink + ")|[% Code](" + propcodelink + ")|[Comment Lines (% total)](" + totalcommentlink + ")|[% Comment](" + propcommentlink + ")|[Blank Lines (% total)](" + totalblanklink + ")|[% Blank](" + propblanklink + ")|")
@@ -118,7 +119,7 @@ if __name__ == '__main__':
 
     REPO_URL = "https://github.com/" + sys.argv[1] + "/tree/" + sys.argv[2] + "/"
 
-    logger.debug(sys.argv)
+    logger.debug(REPO_URL)
     # Get a list of all the java files
     ALL_FILES = find_all_java_files()
     ALL_STATS: Dict[str, int] = {"total": 0, "blanks": 0, "comments": 0, "code": 0}
