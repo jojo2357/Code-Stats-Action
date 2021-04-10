@@ -1,5 +1,5 @@
 
-|File|[Lines (% total)](Statistic/LinesDescending.md/)|[Code Lines (% total)](https://github.com/Smaltin/CodeStats/tree/main/Statistic/CommentsAscending.md/)|[% Code](Statistic/ProportionCodeDescending.md/)|[Comment Lines (% total)](Statistic/CommentsDescending.md/)|[% Comment](Statistic/ProportionCommentsDescending.md/)|[Blank Lines (% total)](Statistic/BlanksDescending.md/)|[% Blank](Statistic/ProportionBlankDescending.md/)|
+|File|[Lines (% total)](Statistics/LinesDescending.md/)|[Code Lines (% total)](https://github.com/Smaltin/CodeStats/tree/main/Statistics/CommentsAscending.md/)|[% Code](Statistics/ProportionCodeDescending.md/)|[Comment Lines (% total)](Statistics/CommentsDescending.md/)|[% Comment](Statistics/ProportionCommentsDescending.md/)|[Blank Lines (% total)](Statistics/BlanksDescending.md/)|[% Blank](Statistics/ProportionBlankDescending.md/)|
 | --- | --- | --- | --- | --- | --- | --- | --- |
 |[ControllerEnums.java](https://github.com/Smaltin/CodeStats/tree/main/src/main/java/frc/controllers/ControllerEnums.java)|362 (4.8%)|196 (3.9%)|54.1%|110 (6.8%)|30.4%|56 (5.7%)|15.5%|
 |[AbstractMotorController.java](https://github.com/Smaltin/CodeStats/tree/main/src/main/java/frc/motors/AbstractMotorController.java)|169 (2.2%)|47 (0.9%)|27.8%|99 (6.2%)|58.6%|23 (2.4%)|13.6%|

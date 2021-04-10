@@ -1,5 +1,5 @@
 
-|File|[Lines (% total)](Statistic/LinesDescending.md/)|[Code Lines (% total)](Statistic/CodeDescending.md/)|[% Code](Statistic/ProportionCodeDescending.md/)|[Comment Lines (% total)](Statistic/CommentsDescending.md/)|[% Comment](Statistic/ProportionCommentsDescending.md/)|[Blank Lines (% total)](Statistic/BlanksDescending.md/)|[% Blank](Statistic/ProportionBlankDescending.md/)|
+|File|[Lines (% total)](Statistics/LinesDescending.md/)|[Code Lines (% total)](Statistics/CodeDescending.md/)|[% Code](Statistics/ProportionCodeDescending.md/)|[Comment Lines (% total)](Statistics/CommentsDescending.md/)|[% Comment](Statistics/ProportionCommentsDescending.md/)|[Blank Lines (% total)](Statistics/BlanksDescending.md/)|[% Blank](Statistics/ProportionBlankDescending.md/)|
 | --- | --- | --- | --- | --- | --- | --- | --- |
 |[SupportedIMU.java](https://github.com/Smaltin/CodeStats/tree/main/src/main/java/frc/telemetry/imu/SupportedIMU.java)|8 (0.1%)|4 (0.1%)|50.0%|3 (0.2%)|37.5%|1 (0.1%)|12.5%|
 |[IntakeControlStyles.java](https://github.com/Smaltin/CodeStats/tree/main/src/main/java/frc/ballstuff/intaking/IntakeControlStyles.java)|8 (0.1%)|4 (0.1%)|50.0%|3 (0.2%)|37.5%|1 (0.1%)|12.5%|

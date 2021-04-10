@@ -1,5 +1,5 @@
 
-|File|[Lines (% total)](Statistic/LinesDescending.md/)|[Code Lines (% total)](Statistic/CodeDescending.md/)|[% Code](Statistic/ProportionCodeDescending.md/)|[Comment Lines (% total)](Statistic/CommentsDescending.md/)|[% Comment](Statistic/ProportionCommentsDescending.md/)|[Blank Lines (% total)](Statistic/BlanksDescending.md/)|[% Blank](Statistic/ProportionBlankDescending.md/)|
+|File|[Lines (% total)](Statistics/LinesDescending.md/)|[Code Lines (% total)](Statistics/CodeDescending.md/)|[% Code](Statistics/ProportionCodeDescending.md/)|[Comment Lines (% total)](Statistics/CommentsDescending.md/)|[% Comment](Statistics/ProportionCommentsDescending.md/)|[Blank Lines (% total)](Statistics/BlanksDescending.md/)|[% Blank](Statistics/ProportionBlankDescending.md/)|
 | --- | --- | --- | --- | --- | --- | --- | --- |
 |[DriveManagerStandard.java](https://github.com/Smaltin/CodeStats/tree/main/src/main/java/frc/drive/DriveManagerStandard.java)|407 (5.4%)|285 (5.7%)|70.0%|89 (5.5%)|21.9%|33 (3.4%)|8.1%|
 |[Shooter.java](https://github.com/Smaltin/CodeStats/tree/main/src/main/java/frc/ballstuff/shooting/Shooter.java)|373 (4.9%)|282 (5.6%)|75.6%|62 (3.9%)|16.6%|29 (3.0%)|7.8%|
