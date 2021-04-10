@@ -97,6 +97,6 @@ if __name__ == '__main__':
                    "," + str(ALL_STATS["blanks"]))
         print("\nTotal" +
               "," + str(ALL_STATS["total"]) +
-              "," + str(ALL_STATS["code"]) +
-              "," + str(ALL_STATS["comments"]) +
-              "," + str(ALL_STATS["blanks"]))
+              "," + str(ALL_STATS["code"]) + "," +
+              "," + str(ALL_STATS["comments"]) + "," +
+              "," + str(ALL_STATS["blanks"]) + ",")
