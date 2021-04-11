@@ -1,4 +1,4 @@
-name: Gather Code Statistics
+name: CodeStats
 description: Gathers statistics into interactable MD files for code in a project
 author: jojo2357
 
