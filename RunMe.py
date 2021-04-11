@@ -2,10 +2,12 @@ import logging
 import os
 import pprint
 import sys
+import json
 from os.path import join, isfile
 from typing import Dict
 
 REPO_URL = ""
+settings = {"root": "", "exclude": [], "langs": []}
 
 
 def sort_lines(idk_what_this_is):
@@ -36,14 +38,21 @@ def sort_blank_prop(idk_what_this_is):
     return idk_what_this_is["goods"]["blanks"] / idk_what_this_is["goods"]["total"]
 
 
+def is_excluded(filename: str):
+    for folder in settings["exclude"]:
+        if filename.__contains__(settings["root"] + folder):
+            return True
+    return False
+
+
 def find_all_java_files():
     """
     finds all the dat files in "User_Generated_Files" folder
     :return:
     """
     all_files = []
-    for dir_path, folders, foundFile in os.walk("src/main/java"):
-        all_files += [join(dir_path, f) for f in foundFile if isfile(join(dir_path, f)) and f.__contains__(".java")]
+    for dir_path, folders, foundFile in os.walk(settings["root"]):
+        all_files += [join(dir_path, f) for f in foundFile if isfile(join(dir_path, f)) and not is_excluded(join(dir_path, f)) and f.__contains__(".java")]
     logger.info("Found: %d files", len(all_files))
     return all_files
 
@@ -78,6 +87,25 @@ def read_and_get_the_goods(filename: str):
         # logger.debug("CODE IN " + filename + ": " + str(index))
         out["code"] += 1
     return out
+
+
+def read_settings():
+    if os.path.isfile("Statistics/config.json"):
+        with open("Statistics/config.json") as SETTINGS_FILE:
+            setin = json.loads("".join(SETTINGS_FILE.readlines()))
+            for key in setin.keys():
+                settings[key] = setin[key]
+            print(settings)
+    if "root" not in settings:
+        settings["root"] = ""
+    else:
+        settings["root"] = settings["root"].replace("\\", "/")
+        if settings["root"][len(settings["root"]) - 1] != "/":
+            settings["root"] += "/"
+    if "langs" not in settings:
+        settings["langs"] = "java"
+    if "exclude" not in settings:
+        settings["exclude"] = []
 
 
 def export_to_file(filename: str, ALL_DATA, totallinelink="Statistics/LinesDescending.md/",
@@ -121,13 +149,15 @@ if __name__ == '__main__':
     logger.setLevel(10)
 
     if len(sys.argv) < 2:
-        sys.argv.append("Smaltin/CodeStats")
+        sys.argv.append("jojo2357/CodeStats")
     if len(sys.argv) < 3:
         sys.argv.append("main")
 
     REPO_URL = "https://github.com/" + sys.argv[1] + "/tree/" + sys.argv[2] + "/"
 
     logger.debug(REPO_URL)
+
+    read_settings()
     # Get a list of all the java files
     ALL_FILES = find_all_java_files()
     ALL_STATS: Dict[str, int] = {"total": 0, "blanks": 0, "comments": 0, "code": 0}
