@@ -1,4 +1,4 @@
-name: Generate a .csv full of code statistics found in the repository
+name: Gather Code Statistics
 
 on: push
 
