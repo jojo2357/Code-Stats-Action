@@ -162,6 +162,11 @@ if __name__ == '__main__':
     logger = logging.getLogger()
     logger.setLevel(10)
 
+    with open(os.environ["GITHUB_EVENT_PATH"]) as json_file:
+        data = json.load(json_file)
+
+    logger.debug(data)
+
     if len(sys.argv) < 2:
         sys.argv.append("jojo2357/CodeStats")
     if len(sys.argv) < 3:
