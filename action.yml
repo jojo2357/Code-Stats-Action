@@ -1,30 +1,27 @@
-name: Code_Stats
+name: Code-Stats
 description: Gathers statistics into interactable MD files for code in a project
 author: jojo2357
 
 branding:
   color: orange
 
-on: push
+runs:
+  using: "composite"
+  steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
 
-jobs:
-  generate-file:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
+    - name: Set up python
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.9"
 
-      - name: Set up python
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.9"
+    - name: Run the script
+      run: python -m RunMe $GITHUB_REPOSITORY ${GITHUB_REF##*/}
 
-      - name: Run the script
-        run: python -m RunMe $GITHUB_REPOSITORY ${GITHUB_REF##*/}
-
-      - name: Git Auto Commit
-        uses: stefanzweifel/git-auto-commit-action@v4.9.2
-        with:
-          commit_message: Statistics
-          commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-          commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com
+    - name: Git Auto Commit
+      uses: stefanzweifel/git-auto-commit-action@v4.9.2
+      with:
+        commit_message: Statistics
+        commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+        commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com
