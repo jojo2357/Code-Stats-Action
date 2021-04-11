@@ -4,6 +4,7 @@ author: jojo2357
 
 branding:
   color: orange
+  icon: code
 
 runs:
   using: "composite"
