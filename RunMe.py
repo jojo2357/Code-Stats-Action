@@ -102,6 +102,9 @@ def read_settings():
             for key in setin.keys():
                 settings[key] = setin[key]
             print(settings)
+    else:
+        with open("Statistics/config.json") as BLANK_FILE:
+            BLANK_FILE.write(json.dumps(settings, indent=2))
     if "root" not in settings:
         settings["root"] = ""
     else:
@@ -173,7 +176,7 @@ if __name__ == '__main__':
     if len(sys.argv) < 3:
         sys.argv.append("main")
 
-    REPO_URL = "https://github.com/" + sys.argv[1] + "/tree/" + sys.argv[2] + "/"
+    REPO_URL = "https://github.com/" + data["repository"]["full_name"] + "/tree/" + str(data["ref"]).split("/")[2] + "/"
 
     logger.debug(REPO_URL)
 
