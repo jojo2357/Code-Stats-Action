@@ -122,17 +122,23 @@ def export_to_file(filename: str, ALL_DATA, totallinelink="Statistics/LinesDesce
             "\n|File|[Lines (% total)](" + REPO_URL + totallinelink + ")|[Code Lines](" + REPO_URL + totalcodelink + ")|[% Code](" + REPO_URL + propcodelink + ")|[Comment Lines](" + REPO_URL + totalcommentlink + ")|[% Comment](" + REPO_URL + propcommentlink + ")|[Blank Lines](" + REPO_URL + totalblanklink + ")|[% Blank](" + REPO_URL + propblanklink + ")|")
         file.write("\n| --- | --- | --- | --- | --- | --- | --- | --- |")
         for index, goods in enumerate(ALL_DATA, start=1):
-            file.write("\n|" + "[" + str(goods["name"]).split("/")[
-                len(str(goods["name"]).split("/")) - 1] + "](" + REPO_URL + str(goods["name"]).replace("\\",
-                                                                                                       "/") + ")" +
-                       "|" + str(goods["goods"]["total"]) + " (" + str(
-                format(100 * goods["goods"]["total"] / ALL_STATS["total"], ".1f")) + "%)" +
-                       "|" + str(goods["goods"]["code"]) + "|" +
-                       str(format(100 * goods["goods"]["code"] / goods["goods"]["total"], ".1f")) + "%" +
-                       "|" + str(goods["goods"]["comments"]) + "|" +
-                       str(format(100 * goods["goods"]["comments"] / goods["goods"]["total"], ".1f")) + "%" +
-                       "|" + str(goods["goods"]["blanks"]) + "|" +
-                       str(format(100 * goods["goods"]["blanks"] / goods["goods"]["total"], ".1f")) + "%|")
+            logger.debug(goods)
+            if goods["goods"]["total"] == 0:
+                file.write("\n|[" + str(goods["name"]).split("/")[
+                    len(str(goods["name"]).split("/")) - 1] + "](" + REPO_URL + str(goods["name"]).replace("\\", "/") + ")"
+                           + "|0|X|X|X|X|X|X|")
+            else:
+                file.write("\n|" + "[" + str(goods["name"]).split("/")[
+                    len(str(goods["name"]).split("/")) - 1] + "](" + REPO_URL + str(goods["name"]).replace("\\",
+                                                                                                           "/") + ")" +
+                           "|" + str(goods["goods"]["total"]) + " (" + str(
+                    format(100 * goods["goods"]["total"] / ALL_STATS["total"], ".1f")) + "%)" +
+                           "|" + str(goods["goods"]["code"]) + "|" +
+                           str(format(100 * goods["goods"]["code"] / goods["goods"]["total"], ".1f")) + "%" +
+                           "|" + str(goods["goods"]["comments"]) + "|" +
+                           str(format(100 * goods["goods"]["comments"] / goods["goods"]["total"], ".1f")) + "%" +
+                           "|" + str(goods["goods"]["blanks"]) + "|" +
+                           str(format(100 * goods["goods"]["blanks"] / goods["goods"]["total"], ".1f")) + "%|")
         file.write("\n|Total" +
                    "|" + str(ALL_STATS["total"]) +
                    "|" + str(ALL_STATS["code"]) + "| " +
