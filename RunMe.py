@@ -100,7 +100,9 @@ def read_settings():
         settings["root"] = ""
     else:
         settings["root"] = settings["root"].replace("\\", "/")
-        if settings["root"][len(settings["root"]) - 1] != "/":
+        if settings["root"] == "":
+            settings["root"] = "."
+        elif settings["root"][len(settings["root"]) - 1] != "/":
             settings["root"] += "/"
     if "langs" not in settings:
         settings["langs"] = "java"
