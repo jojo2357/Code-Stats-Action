@@ -74,7 +74,7 @@ def read_and_get_the_goods(filename: str):
             out["blanks"] += 1
             # logger.debug("BLANK IN " + filename + ": " + str(index))
             continue
-        if line.__contains__("/*"):
+        if line.__contains__("/*") and not line.__contains__("//*"):
             in_block_comment = True
             if line.lstrip()[0:2] != "/*":
                 out["code"] += 1
