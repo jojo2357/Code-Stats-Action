@@ -103,7 +103,7 @@ def read_settings():
                 settings[key] = setin[key]
             print(settings)
     else:
-        with open("Statistics/config.json") as BLANK_FILE:
+        with open("Statistics/config.json", "w") as BLANK_FILE:
             BLANK_FILE.write(json.dumps(settings, indent=2))
     if "root" not in settings:
         settings["root"] = ""
