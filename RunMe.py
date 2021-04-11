@@ -185,16 +185,22 @@ if __name__ == '__main__':
         file.write(
             "File,Lines (% total),Code Lines,% Code,Comment Lines,% Comment,Blank Lines,% Blank")
         for index, goods in enumerate(ALL_DATA, start=1):
-            file.write("\n" + str(goods["name"]).split("\\")[len(str(goods["name"]).split("\\")) - 1] +
-                       "," + str(goods["goods"]["total"]) + " (" + str(
-                format(100 * goods["goods"]["total"] / ALL_STATS["total"], ".1f")) + "%)" +
-                       "," + str(goods["goods"]["code"]) + "," +
-                       str(format(100 * goods["goods"]["code"] / goods["goods"]["total"], ".1f")) + "%" +
-                       "," + str(goods["goods"]["comments"]) + "," +
-                       str(format(100 * goods["goods"]["comments"] / goods["goods"]["total"], ".1f")) + "%" +
-                       "," + str(goods["goods"]["blanks"]) + "," +
-                       str(format(100 * goods["goods"]["blanks"] / goods["goods"]["total"], ".1f")) + "%"
-                       )
+            if goods["goods"]["total"] == 0:
+                logger.debug("TOTAL IS 0")
+                file.write("\n|[" + str(goods["name"]).split("/")[
+                    len(str(goods["name"]).split("/")) - 1] + "](" + REPO_URL + str(goods["name"]).replace("\\", "/") + ")"
+                           + "|0|X|X|X|X|X|X|")
+            else:
+                file.write("\n" + str(goods["name"]).split("\\")[len(str(goods["name"]).split("\\")) - 1] +
+                           "," + str(goods["goods"]["total"]) + " (" + str(
+                    format(100 * goods["goods"]["total"] / ALL_STATS["total"], ".1f")) + "%)" +
+                           "," + str(goods["goods"]["code"]) + "," +
+                           str(format(100 * goods["goods"]["code"] / goods["goods"]["total"], ".1f")) + "%" +
+                           "," + str(goods["goods"]["comments"]) + "," +
+                           str(format(100 * goods["goods"]["comments"] / goods["goods"]["total"], ".1f")) + "%" +
+                           "," + str(goods["goods"]["blanks"]) + "," +
+                           str(format(100 * goods["goods"]["blanks"] / goods["goods"]["total"], ".1f")) + "%"
+                           )
         file.write("\nTotal" +
                    "," + str(ALL_STATS["total"]) +
                    "," + str(ALL_STATS["code"]) + "," +
