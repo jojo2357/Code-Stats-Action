@@ -1,6 +1,9 @@
 name: Gather Code Statistics
 description: Gathers statistics into interactable MD files for code in a project
-color: orange
+author: jojo2357
+
+branding:
+  color: orange
 
 on: push
 
