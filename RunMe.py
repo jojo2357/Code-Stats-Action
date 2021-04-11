@@ -27,14 +27,20 @@ def sort_blank(idk_what_this_is):
 
 
 def sort_code_prop(idk_what_this_is):
+    if idk_what_this_is["goods"]["total"] == 0:
+        return -1
     return idk_what_this_is["goods"]["code"] / idk_what_this_is["goods"]["total"]
 
 
 def sort_comment_prop(idk_what_this_is):
+    if idk_what_this_is["goods"]["total"] == 0:
+        return -1
     return idk_what_this_is["goods"]["comments"] / idk_what_this_is["goods"]["total"]
 
 
 def sort_blank_prop(idk_what_this_is):
+    if idk_what_this_is["goods"]["total"] == 0:
+        return -1
     return idk_what_this_is["goods"]["blanks"] / idk_what_this_is["goods"]["total"]
 
 
