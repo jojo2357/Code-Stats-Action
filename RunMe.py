@@ -186,7 +186,7 @@ if __name__ == '__main__':
             "File,Lines (% total),Code Lines,% Code,Comment Lines,% Comment,Blank Lines,% Blank")
         for index, goods in enumerate(ALL_DATA, start=1):
             if goods["goods"]["total"] == 0:
-                logger.debug("TOTAL IS 0 FOR " + goods["goods"]["name"])
+                logger.debug("TOTAL IS 0 FOR " + goods["name"])
                 file.write("\n|[" + str(goods["name"]).split("/")[
                     len(str(goods["name"]).split("/")) - 1] + "](" + REPO_URL + str(goods["name"]).replace("\\", "/") + ")"
                            + "|0|X|X|X|X|X|X|")
