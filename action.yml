@@ -1,4 +1,6 @@
 name: Gather Code Statistics
+description: Gathers statistics into interactable MD files for code in a project
+color: orange
 
 on: push
 
