@@ -108,6 +108,7 @@ def read_settings():
         settings["langs"] = ["java"]
     if "exclude" not in settings:
         settings["exclude"] = []
+    settings["exclude"] = list(filter(lambda exclude: exclude != "", settings["exclude"]))
 
 
 def export_to_file(filename: str, ALL_DATA, totallinelink="Statistics/LinesDescending.md/",
