@@ -97,8 +97,6 @@ def read_and_get_the_goods(filename: str):
 
 
 def read_settings():
-    if not os.path.exists("Statistics"):
-        os.mkdir("Statistics")
     if os.path.isfile("Statistics/config.json"):
         with open("Statistics/config.json") as SETTINGS_FILE:
             setin = json.loads("".join(SETTINGS_FILE.readlines()))
@@ -173,12 +171,15 @@ if __name__ == '__main__':
     logger = logging.getLogger()
     logger.setLevel(10)
 
-    logger.debug(os.environ)
+    # logger.debug(os.environ)
 
     with open(os.environ["GITHUB_EVENT_PATH"]) as json_file:
         data = json.load(json_file)
 
-    logger.debug(data)
+    settings["root"] = data["INPUT_ROOT_DIR"]
+    settings["langs"] = str(data["INPUT_LANGS"]).split("|")
+    settings["exclude"] = str(data["INPUT_EXCLUDE"]).split("|")
+    # logger.debug(data)
     logger.debug(data["ref"])
     logger.debug(data["repository"]["full_name"])
 
@@ -191,7 +192,7 @@ if __name__ == '__main__':
 
     logger.debug(REPO_URL)
 
-    read_settings()
+    # read_settings()
     # Get a list of all the java files
     ALL_FILES = find_all_java_files()
     ALL_STATS: Dict[str, int] = {"total": 0, "blanks": 0, "comments": 0, "code": 0}
@@ -233,6 +234,9 @@ if __name__ == '__main__':
                    "," + str(ALL_STATS["code"]) + "," + str(ALL_STATS["code"] / ALL_STATS["total"]) +
                    "," + str(ALL_STATS["comments"]) + "," + str(ALL_STATS["comments"] / ALL_STATS["total"]) +
                    "," + str(ALL_STATS["blanks"]) + "," + str(ALL_STATS["blanks"] / ALL_STATS["total"]))
+
+    if not os.path.exists("Statistics"):
+        os.mkdir("Statistics")
 
     ALL_DATA.sort(reverse=True, key=sort_lines)
     export_to_file("Statistic.md", ALL_DATA)
