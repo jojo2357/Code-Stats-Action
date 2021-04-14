@@ -100,8 +100,10 @@ def read_settings():
     settings["root"] = settings["root"].replace("\\", "/")
     if settings["root"] == "":
         settings["root"] = "."
-    elif settings["root"][len(settings["root"]) - 1] != "/":
+    if settings["root"][len(settings["root"]) - 1] != "/":
         settings["root"] += "/"
+    if settings["root"][0] != "/":
+        settings["root"] = "/" + settings["root"]
     if "langs" not in settings:
         settings["langs"] = ["java"]
     if "exclude" not in settings:
@@ -169,7 +171,7 @@ if __name__ == '__main__':
     settings["root"] = os.environ["INPUT_ROOT_DIR"]
     settings["langs"] = str(os.environ["INPUT_LANGS"]).split("|")
     settings["exclude"] = str(os.environ["INPUT_EXCLUDE"]).split("|")
-    # logger.debug(data)
+    logger.debug(settings)
     logger.debug(data["ref"])
     logger.debug(data["repository"]["full_name"])
 
@@ -183,6 +185,7 @@ if __name__ == '__main__':
     logger.debug(REPO_URL)
 
     read_settings()
+    logger.debug(settings)
     # Get a list of all the java files
     ALL_FILES = find_all_java_files()
     ALL_STATS: Dict[str, int] = {"total": 0, "blanks": 0, "comments": 0, "code": 0}
