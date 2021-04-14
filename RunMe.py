@@ -150,7 +150,7 @@ def export_to_file(filename: str, ALL_DATA, totallinelink="Statistics/LinesDesce
                            str(format(100 * goods["goods"]["comments"] / goods["goods"]["total"], ".1f")) + "%" +
                            "|" + str(goods["goods"]["blanks"]) + "|" +
                            str(format(100 * goods["goods"]["blanks"] / goods["goods"]["total"], ".1f")) + "%|")
-        file.write("\n|Total (" + str(len(ALL_STATS)) +
+        file.write("\n|Total (" + str(len(ALL_DATA)) +
                    ")|" + str(ALL_STATS["total"]) +
                    "|" + str(ALL_STATS["code"]) + "|" + str(
             format(100 * ALL_STATS["code"] / ALL_STATS["total"], ".1f")) +
