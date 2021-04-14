@@ -97,25 +97,13 @@ def read_and_get_the_goods(filename: str):
 
 
 def read_settings():
-    if os.path.isfile("Statistics/config.json"):
-        with open("Statistics/config.json") as SETTINGS_FILE:
-            setin = json.loads("".join(SETTINGS_FILE.readlines()))
-            for key in setin.keys():
-                settings[key] = setin[key]
-            print(settings)
-    else:
-        with open("Statistics/config.json", "w") as BLANK_FILE:
-            BLANK_FILE.write(json.dumps(settings, indent=2))
-    if "root" not in settings:
-        settings["root"] = ""
-    else:
-        settings["root"] = settings["root"].replace("\\", "/")
-        if settings["root"] == "":
-            settings["root"] = "."
-        elif settings["root"][len(settings["root"]) - 1] != "/":
-            settings["root"] += "/"
+    settings["root"] = settings["root"].replace("\\", "/")
+    if settings["root"] == "":
+        settings["root"] = "."
+    elif settings["root"][len(settings["root"]) - 1] != "/":
+        settings["root"] += "/"
     if "langs" not in settings:
-        settings["langs"] = "java"
+        settings["langs"] = ["java"]
     if "exclude" not in settings:
         settings["exclude"] = []
 
@@ -194,7 +182,7 @@ if __name__ == '__main__':
 
     logger.debug(REPO_URL)
 
-    # read_settings()
+    read_settings()
     # Get a list of all the java files
     ALL_FILES = find_all_java_files()
     ALL_STATS: Dict[str, int] = {"total": 0, "blanks": 0, "comments": 0, "code": 0}
@@ -231,11 +219,17 @@ if __name__ == '__main__':
                            "," + str(goods["goods"]["blanks"]) + "," +
                            str(format(100 * goods["goods"]["blanks"] / goods["goods"]["total"], ".1f")) + "%"
                            )
-        file.write("\nTotal" +
-                   "," + str(ALL_STATS["total"]) +
-                   "," + str(ALL_STATS["code"]) + "," + str(ALL_STATS["code"] / ALL_STATS["total"]) +
-                   "," + str(ALL_STATS["comments"]) + "," + str(ALL_STATS["comments"] / ALL_STATS["total"]) +
-                   "," + str(ALL_STATS["blanks"]) + "," + str(ALL_STATS["blanks"] / ALL_STATS["total"]))
+        if ALL_STATS["total"] == 0:
+            file.write("\nTotal" +
+                       "," + str(ALL_STATS["total"]) +
+                       "," + str(ALL_STATS["code"]) + ",X," + str(ALL_STATS["comments"]) + ",X," + str(
+                ALL_STATS["blanks"]) + ",X")
+        else:
+            file.write("\nTotal" +
+                       "," + str(ALL_STATS["total"]) +
+                       "," + str(ALL_STATS["code"]) + "," + str(ALL_STATS["code"] / ALL_STATS["total"]) +
+                       "," + str(ALL_STATS["comments"]) + "," + str(ALL_STATS["comments"] / ALL_STATS["total"]) +
+                       "," + str(ALL_STATS["blanks"]) + "," + str(ALL_STATS["blanks"] / ALL_STATS["total"]))
 
     if not os.path.exists("Statistics"):
         os.mkdir("Statistics")
