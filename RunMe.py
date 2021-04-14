@@ -47,15 +47,12 @@ def sort_blank_prop(idk_what_this_is):
 def is_excluded(filename: str):
     for folder in settings["exclude"]:
         if filename.__contains__(settings["root"] + folder):
+            logger.debug("Excluding " + filename + " because of " + folder)
             return True
     return False
 
 
 def find_all_java_files():
-    """
-    finds all the dat files in "User_Generated_Files" folder
-    :return:
-    """
     all_files = []
     for dir_path, folders, foundFile in os.walk(settings["root"]):
         all_files += [join(dir_path, f) for f in foundFile if
