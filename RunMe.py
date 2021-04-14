@@ -99,8 +99,6 @@ def read_settings():
         settings["root"] = "."
     if settings["root"][len(settings["root"]) - 1] != "/":
         settings["root"] += "/"
-    if settings["root"][0] != "/":
-        settings["root"] = "/" + settings["root"]
     if "langs" not in settings:
         settings["langs"] = ["java"]
     if "exclude" not in settings:
@@ -159,7 +157,7 @@ if __name__ == '__main__':
     logger = logging.getLogger()
     logger.setLevel(10)
 
-    # logger.debug(os.environ)
+    logger.debug(os.listdir())
 
     with open(os.environ["GITHUB_EVENT_PATH"]) as json_file:
         data = json.load(json_file)
@@ -183,7 +181,7 @@ if __name__ == '__main__':
     logger.debug(REPO_URL)
 
     read_settings()
-    logger.debug(settings)
+    logger.debug("Found root: " + str(os.path.exists(settings["root"])))
     # Get a list of all the java files
     ALL_FILES = find_all_java_files()
     ALL_STATS: Dict[str, int] = {"total": 0, "blanks": 0, "comments": 0, "code": 0}
