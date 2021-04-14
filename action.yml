@@ -6,6 +6,20 @@ branding:
   color: orange
   icon: code
 
+inputs:
+  root_dir:
+    description: The root directory of code to analyze
+    required: false
+    default: ''
+  langs:
+    description: The languages to apply statistics on
+    required: false
+    default: ''
+  exclude:
+    description: Pipe (|) seperated directories to ignore
+    required: false
+    default: ''
+
 runs:
   using: docker
   image: Dockerfile
