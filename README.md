@@ -14,4 +14,4 @@ Add this action to your workflow. Example:
 ### Settings
 Add `with:` to the workflow. Current usable settings:
 - `root_dir: 'path/to/project/root'` - Project's root folder
-- `exclude: 'path/to/project/root/excludeme|path/to/project/root/excludemetoo'` - Excluded directories. `|` seperates multiple paths.
+- `exclude: 'excludeme|excludemetoo'` - Excluded directories in relativity to the root. `|` seperates multiple paths.
