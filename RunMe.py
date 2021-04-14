@@ -58,7 +58,8 @@ def find_all_java_files():
     """
     all_files = []
     for dir_path, folders, foundFile in os.walk(settings["root"]):
-        all_files += [join(dir_path, f) for f in foundFile if isfile(join(dir_path, f)) and not is_excluded(join(dir_path, f)) and f.__contains__(".java")]
+        all_files += [join(dir_path, f) for f in foundFile if
+                      isfile(join(dir_path, f)) and not is_excluded(join(dir_path, f)) and f.__contains__(".java")]
     logger.info("Found: %d files", len(all_files))
     return all_files
 
@@ -134,7 +135,8 @@ def export_to_file(filename: str, ALL_DATA, totallinelink="Statistics/LinesDesce
             logger.debug(goods)
             if goods["goods"]["total"] == 0:
                 file.write("\n|[" + str(goods["name"]).split("/")[
-                    len(str(goods["name"]).split("/")) - 1] + "](" + REPO_URL + str(goods["name"]).replace("\\", "/") + ")"
+                    len(str(goods["name"]).split("/")) - 1] + "](" + REPO_URL + str(goods["name"]).replace("\\",
+                                                                                                           "/") + ")"
                            + "|0|X|X|X|X|X|X|")
             else:
                 file.write("\n|" + "[" + str(goods["name"]).split("/")[
@@ -148,11 +150,15 @@ def export_to_file(filename: str, ALL_DATA, totallinelink="Statistics/LinesDesce
                            str(format(100 * goods["goods"]["comments"] / goods["goods"]["total"], ".1f")) + "%" +
                            "|" + str(goods["goods"]["blanks"]) + "|" +
                            str(format(100 * goods["goods"]["blanks"] / goods["goods"]["total"], ".1f")) + "%|")
-        file.write("\n|Total" +
-                   "|" + str(ALL_STATS["total"]) +
-                   "|" + str(ALL_STATS["code"]) + "| " +
-                   "|" + str(ALL_STATS["comments"]) + "| " +
-                   "|" + str(ALL_STATS["blanks"]) + "| |")
+        file.write("\n|Total (" + str(len(ALL_STATS)) +
+                   ")|" + str(ALL_STATS["total"]) +
+                   "|" + str(ALL_STATS["code"]) + "|" + str(
+            format(100 * ALL_STATS["code"] / ALL_STATS["total"], ".1f")) +
+                   "%|" + str(ALL_STATS["comments"]) + "| " + str(
+            format(100 * ALL_STATS["comments"] / ALL_STATS["total"], ".1f")) +
+                   "%|" + str(ALL_STATS["blanks"]) + "|" + str(
+            format(100 * ALL_STATS["blanks"] / ALL_STATS["total"], ".1f")) +
+                   "%|")
 
 
 if __name__ == '__main__':
@@ -203,7 +209,8 @@ if __name__ == '__main__':
             if goods["goods"]["total"] == 0:
                 logger.debug("TOTAL IS 0 FOR " + goods["name"])
                 file.write("\n|[" + str(goods["name"]).split("/")[
-                    len(str(goods["name"]).split("/")) - 1] + "](" + REPO_URL + str(goods["name"]).replace("\\", "/") + ")"
+                    len(str(goods["name"]).split("/")) - 1] + "](" + REPO_URL + str(goods["name"]).replace("\\",
+                                                                                                           "/") + ")"
                            + "|0|X|X|X|X|X|X|")
             else:
                 file.write("\n" + str(goods["name"]).split("\\")[len(str(goods["name"]).split("\\")) - 1] +
@@ -218,9 +225,9 @@ if __name__ == '__main__':
                            )
         file.write("\nTotal" +
                    "," + str(ALL_STATS["total"]) +
-                   "," + str(ALL_STATS["code"]) + "," +
-                   "," + str(ALL_STATS["comments"]) + "," +
-                   "," + str(ALL_STATS["blanks"]) + ",")
+                   "," + str(ALL_STATS["code"]) + "," + str(ALL_STATS["code"] / ALL_STATS["total"]) +
+                   "," + str(ALL_STATS["comments"]) + "," + str(ALL_STATS["comments"] / ALL_STATS["total"]) +
+                   "," + str(ALL_STATS["blanks"]) + "," + str(ALL_STATS["blanks"] / ALL_STATS["total"]))
     if not os.path.exists("Statistics"):
         os.mkdir("Statistics")
 
