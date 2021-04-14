@@ -176,11 +176,11 @@ if __name__ == '__main__':
     with open(os.environ["GITHUB_EVENT_PATH"]) as json_file:
         data = json.load(json_file)
 
-    logger.debug(data)
-    logger.debug(data["INPUT_ROOT_DIR"])
-    settings["root"] = data["INPUT_ROOT_DIR"]
-    settings["langs"] = str(data["INPUT_LANGS"]).split("|")
-    settings["exclude"] = str(data["INPUT_EXCLUDE"]).split("|")
+    logger.debug(os.environ)
+    logger.debug(os.environ["INPUT_ROOT_DIR"])
+    settings["root"] = os.environ["INPUT_ROOT_DIR"]
+    settings["langs"] = str(os.environ["INPUT_LANGS"]).split("|")
+    settings["exclude"] = str(os.environ["INPUT_EXCLUDE"]).split("|")
     # logger.debug(data)
     logger.debug(data["ref"])
     logger.debug(data["repository"]["full_name"])
