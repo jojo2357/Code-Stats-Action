@@ -5,14 +5,17 @@ let REPO_URL = "";
 let settings = {"root": "", "exclude": [], "langs": []};
 let ALL_STATS = {"total": 0, "blanks": 0, "comments": 0, "code": 0};
 
-function find_all_java_files(dir = settings["root"]) {
+function find_all_java_files(dir = settings.root) {
     let all_files = [];
     fs.readdirSync(dir).forEach(folder => {
+        console.log(path.join(dir, folder))
         if (fs.lstatSync(path.join(dir, folder)).isDirectory())
             all_files.concat(find_all_java_files(path.join(dir, folder)));
         else if (fs.lstatSync(path.join(dir, folder)).isFile())
-            if (folder.includes(".java"))
+            if (folder.includes(".java")) {
                 all_files.push(path.join(dir, folder));
+                console.log(`Found: ${path.join(dir, folder)}`);
+            }
     });
     return all_files;
 }
@@ -131,9 +134,8 @@ function main() {
     //logger.debug(REPO_URL);
 
     clean_settings();
-    //logger.debug("Found root: " + str(os.path.exists(settings["root"])));
     let ALL_FILES = find_all_java_files();
-    //logger.debug(pprint.pformat(ALL_STATS));
+    console.log(`Found ${ALL_FILES.length} files`);
     let ALL_DATA = [];
     ALL_FILES.forEach(fileName => {
         ALL_DATA.append({"name": fileName.replace("\\", "/"), "goods": read_and_get_the_goods(fileName)});
