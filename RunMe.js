@@ -4,20 +4,18 @@ const path = require("path");
 let REPO_URL = "";
 let settings = {"root": "", "exclude": [], "langs": []};
 let ALL_STATS = {"total": 0, "blanks": 0, "comments": 0, "code": 0};
+let ALL_FILES = [];
 
 function find_all_java_files(dir = settings.root) {
-    let all_files = [];
     fs.readdirSync(dir).forEach(folder => {
-        console.log(path.join(dir, folder))
         if (fs.lstatSync(path.join(dir, folder)).isDirectory())
-            all_files.concat(find_all_java_files(path.join(dir, folder)));
+            find_all_java_files(path.join(dir, folder));
         else if (fs.lstatSync(path.join(dir, folder)).isFile())
             if (folder.includes(".java")) {
-                all_files.push(path.join(dir, folder));
+                ALL_FILES.push(path.join(dir, folder));
                 console.log(`Found: ${path.join(dir, folder)}`);
             }
     });
-    return all_files;
 }
 
 function read_and_get_the_goods(filename = "") {
@@ -134,7 +132,7 @@ function main() {
     //logger.debug(REPO_URL);
 
     clean_settings();
-    let ALL_FILES = find_all_java_files();
+    find_all_java_files();
     console.log(`Found ${ALL_FILES.length} files`);
     let ALL_DATA = [];
     ALL_FILES.forEach(fileName => {
