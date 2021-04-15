@@ -115,6 +115,8 @@ function export_to_file(filename = "", ALL_DATA, totalLines = 0, links = {
 
 
 function main() {
+    process.stdout.write(process.env.toString());
+    
     /*logger.debug(os.environ);
     logger.debug(os.environ["INPUT_ROOT_DIR"]);*/
     settings.root = process.env.INPUT_ROOT_DIR;
@@ -123,6 +125,8 @@ function main() {
     /*logger.debug(settings);
     logger.debug(data["ref"]);
     logger.debug(data["repository"]["full_name"]);*/
+
+
 
     REPO_URL = "https://github.com/" + process.env.repository.full_name + "/tree/" + str(process.env.ref).split("/")[2] + "/";
 
@@ -174,7 +178,7 @@ function main() {
     fs.writeFileSync("Statistic.csv", out);
 
     if (!fs.existsSync("Statistics"))
-        fs.mkdir("Statistics");
+        fs.mkdirSync("Statistics");
 
     export_to_file("Statistic.md", ALL_DATA.sort((a, b) => a.goods.total - b.goods.total));
     export_to_file("Statistics/LinesDescending.md", ALL_DATA.sort((a, b) => a.goods.total - b.goods.total), {totallinelink: "Statistics/LinesAscending.md/"});
