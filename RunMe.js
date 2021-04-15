@@ -126,9 +126,7 @@ function main() {
     logger.debug(data["ref"]);
     logger.debug(data["repository"]["full_name"]);*/
 
-
-
-    REPO_URL = "https://github.com/" + process.env.repository.full_name + "/tree/" + str(process.env.ref).split("/")[2] + "/";
+    REPO_URL = "https://github.com/" + process.env.GITHUB_REPOSITORY + "/tree/" + process.env.GITHUB_REF.split("/")[2] + "/";
 
     //logger.debug(REPO_URL);
 
