@@ -115,8 +115,8 @@ function export_to_file(filename = "", ALL_DATA, totalLines = 0, links = {
 
 
 function main() {
-    process.stdout.write(process.env.toString());
-    
+    console.log(process.env.toString());
+
     /*logger.debug(os.environ);
     logger.debug(os.environ["INPUT_ROOT_DIR"]);*/
     settings.root = process.env.INPUT_ROOT_DIR;
