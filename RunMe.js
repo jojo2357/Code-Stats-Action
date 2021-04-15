@@ -21,7 +21,7 @@ function find_all_java_files(dir = settings.root) {
 function read_and_get_the_goods(filename = "") {
     let out = {"total": 0, "blanks": 0, "comments": 0, "code": 0};
     let inBlockComment = false;
-    fs.readFileSync(filename).toString().replaceAll("\r", "").split('\n').forEach((line, windex) => {
+    fs.readFileSync(filename).toString().replace(/\\/g, "/").split('\n').forEach((line, windex) => {
         out.total++;
         if (line.trim().length === 0) {
             out.blanks++;
@@ -52,7 +52,7 @@ function read_and_get_the_goods(filename = "") {
 
 
 function clean_settings() {
-    settings.root = settings.root.replace("\\", "/");
+    settings.root = settings.root.replace(/\\/g, "/");
     if (settings.root === "") {
         settings.root = ".";
     }
@@ -92,9 +92,9 @@ function export_to_file(filename = "", ALL_DATA, totalLines = 0, links = {
     out += "\n| --- | --- | --- | --- | --- | --- | --- | --- |";
     ALL_DATA.forEach((goods) => {
         if (goods.goods.total === 0) {
-            out += "\n|[" + goods.name.split("/")[goods.name.split("/").length - 1] + "](" + REPO_URL + goods.name.replace("\\", "/") + ")" + "|0|X|X|X|X|X|X|";
+            out += "\n|[" + goods.name.split("/")[goods.name.split("/").length - 1] + "](" + REPO_URL + goods.name.replace(/\\/g, "/") + ")" + "|0|X|X|X|X|X|X|";
         }else {
-            out += "\n|" + "[" + goods.name.split("/")[goods.name.split("/").length - 1] + "](" + REPO_URL + goods.name.replace("\\", "/") + ")" +
+            out += "\n|" + "[" + goods.name.split("/")[goods.name.split("/").length - 1] + "](" + REPO_URL + goods.name.replace(/\\/g, "/") + ")" +
                 "|" + goods.goods.total + " (" + 
                 (100 * goods.goods.total / ALL_STATS.total).toFixed(1) + "%)" +
                 "|" + goods.goods.code + "|" +
@@ -136,7 +136,7 @@ function main() {
     console.log(`Found ${ALL_FILES.length} files`);
     let ALL_DATA = [];
     ALL_FILES.forEach(fileName => {
-        ALL_DATA.append({"name": fileName.replace("\\", "/"), "goods": read_and_get_the_goods(fileName)});
+        ALL_DATA.append({"name": fileName.replace(/\\/g, "/"), "goods": read_and_get_the_goods(fileName)});
     });
     ALL_FILES.forEach(fileName => {
         ALL_DATA.push({name: fileName, goods: read_and_get_the_goods(fileName)});
