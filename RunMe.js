@@ -136,7 +136,7 @@ function main() {
     console.log(`Found ${ALL_FILES.length} files`);
     let ALL_DATA = [];
     ALL_FILES.forEach(fileName => {
-        ALL_DATA.append({"name": fileName.replace(/\\/g, "/"), "goods": read_and_get_the_goods(fileName)});
+        ALL_DATA.push({"name": fileName.replace(/\\/g, "/"), "goods": read_and_get_the_goods(fileName)});
     });
     ALL_FILES.forEach(fileName => {
         ALL_DATA.push({name: fileName, goods: read_and_get_the_goods(fileName)});
