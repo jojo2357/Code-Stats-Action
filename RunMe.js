@@ -25,7 +25,7 @@ function read_and_get_the_goods(filename = "") {
     lines.forEach((line, windex) => {
         out.total++;
         if (line.trim().length === 0) {
-            if (windex === lines.length) {
+            if (windex === lines.length - 1) {
                 out.total--;
                 return;
             }
