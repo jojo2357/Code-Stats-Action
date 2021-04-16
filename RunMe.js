@@ -140,16 +140,15 @@ function main() {
         settings.root = process.env.INPUT_ROOT_DIR;
         settings["langs"] = process.env.INPUT_LANGS.split("|");
         settings["exclude"] = process.env.INPUT_EXCLUDE.split("|");
+        REPO_URL = "https://github.com/" + process.env.GITHUB_REPOSITORY + "/tree/" + process.env.GITHUB_REF.split("/")[2] + "/";
     }else{
         settings.root = "src/main/java"
+        REPO_URL = "some.website.com";
     }
 
     /*logger.debug(settings);
     logger.debug(data["ref"]);
     logger.debug(data["repository"]["full_name"]);*/
-
-    //REPO_URL = "https://github.com/" + process.env.GITHUB_REPOSITORY + "/tree/" + process.env.GITHUB_REF.split("/")[2] + "/";
-    REPO_URL = "some.website.com";
 
     //logger.debug(REPO_URL);
 
