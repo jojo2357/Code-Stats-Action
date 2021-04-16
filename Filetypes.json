@@ -1,12 +1,34 @@
 {
-  "java": {
-    "startSingleComment": "//",
-    "startBlockComment": "/*",
-    "endBlockComment": "*/"
-  },
-  "py": {
-    "startSingleComment": "#",
-    "startBlockComment": "'''",
-    "endBlockComment": "'''"
-  }
+  "langs": [
+    {
+      "name": "java",
+      "startSingleComment": "//",
+      "startBlockComment": "/*",
+      "endBlockComment": "*/",
+      "specialIgnores": ["//*"],
+      "fileExtensions": [
+        "java"
+      ]
+    },
+    {
+      "name": "python",
+      "startSingleComment": "#",
+      "startBlockComment": "\"\"\"",
+      "endBlockComment": "\"\"\"",
+      "specialIgnores": [],
+      "fileExtensions": [
+        "py"
+      ]
+    },
+    {
+      "name": "javascript",
+      "startSingleComment": "//",
+      "startBlockComment": "/*",
+      "endBlockComment": "*/",
+      "specialIgnores": ["//*"],
+      "fileExtensions": [
+        "js"
+      ]
+    }
+  ]
 }

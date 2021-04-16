@@ -6,21 +6,24 @@ let settings = {"root": "", "exclude": [], "langs": []};
 let ALL_STATS = {"total": 0, "blanks": 0, "comments": 0, "code": 0};
 let ALL_FILES = [];
 
-function find_all_java_files(dir = settings.root) {
+let LANG_DATA;
+
+function find_all_files(dir = settings.root) {
     fs.readdirSync(dir).forEach(folder => {
         if (fs.lstatSync(path.join(dir, folder)).isDirectory())
-            find_all_java_files(path.join(dir, folder));
-        else if (fs.lstatSync(path.join(dir, folder)).isFile())
-            if (folder.includes(".java")) {
-                ALL_FILES.push(path.join(dir, folder));
-                console.log(`Found: ${path.join(dir, folder)}`);
-            }
+            find_all_files(path.join(dir, folder));
+        else if (fs.lstatSync(path.join(dir, folder)).isFile()) {
+            ALL_FILES.push(path.join(dir, folder));
+        }
     });
 }
 
 function read_and_get_the_goods(filename = "") {
     let out = {"total": 0, "blanks": 0, "comments": 0, "code": 0};
     let inBlockComment = false;
+    let justStartedABlock;
+    const lang = getLang(filename)
+    const langConfig = {singleLine: lang.startSingleComment, blockStart: lang.startBlockComment, blockEnd: lang.endBlockComment, ignores: lang.specialIgnores}
     const lines = fs.readFileSync(filename).toString().replace(/\\/g, "/").split('\n');
     lines.forEach((line, windex) => {
         out.total++;
@@ -32,21 +35,25 @@ function read_and_get_the_goods(filename = "") {
             out.blanks++;
             return;
         }
-        if (line.includes("/*") && !line.includes("//*")) {
-            inBlockComment = true;
-            if (line.trim().substr(0, 2) !== "/*") {
+        if (!inBlockComment && line.includes(langConfig.blockStart) && !lineHasTheSpecial(line, langConfig.ignores)) {
+            inBlockComment = justStartedABlock = true;
+            if (line.trim().substr(0, langConfig.blockStart.length) !== langConfig.blockStart) {
                 out.code++;
                 out.comments--;
             }
         }
         if (inBlockComment) {
             out.comments++;
-            if (line.includes("*/")) {
+            if (justStartedABlock && langConfig.blockEnd === langConfig.blockStart && line.replace(langConfig.blockStart, "").includes(langConfig.blockStart)) {
                 inBlockComment = false;
             }
+            if ((langConfig.blockEnd === langConfig.blockStart && !justStartedABlock && line.includes(langConfig.blockEnd)) || (langConfig.blockEnd !== langConfig.blockStart && line.includes(langConfig.blockEnd))) {
+                inBlockComment = false;
+            }
+            justStartedABlock = false;
             return;
         }
-        if (line.trim().substr(0, 2) === "//") {
+        if (line.trim().substr(0, langConfig.singleLine.length) === langConfig.singleLine) {
             out.comments++;
             return;
         }
@@ -55,6 +62,12 @@ function read_and_get_the_goods(filename = "") {
     return out;
 }
 
+function lineHasTheSpecial(line = "", specials = [""]){
+    for (var special in specials)
+        if (line.includes(specials[special]))
+            return true;
+    return false;
+}
 
 function clean_settings() {
     settings.root = settings.root.replace(/\\/g, "/");
@@ -94,16 +107,16 @@ function export_to_file(filename, ALL_DATA, links = {
         links.propblanklink = "Statistics/ProportionBlanksDescending.md/";
     if (!links.namelink)
         links.namelink = "Statistics/NameAscending.md/";
-    console.log(`Exporting to ${filename}`)
+    console.log(`Exporting to ${filename}`);
     let out = "";
     out += `\n|[File](${REPO_URL + links.namelink})|[Lines (% total)](${REPO_URL + links.totallinelink})|[Code Lines](${REPO_URL + links.totalcodelink})|[% Code](${REPO_URL + links.propcodelink})|[Comment Lines](${REPO_URL + links.totalcommentlink})|[% Comment](${REPO_URL + links.propcommentlink})|[Blank Lines](${REPO_URL + links.totalblanklink})|[% Blank](${REPO_URL + links.propblanklink})|`;
     out += "\n| --- | --- | --- | --- | --- | --- | --- | --- |";
     ALL_DATA.forEach((goods) => {
         if (goods.goods.total === 0) {
             out += `\n|[${goods.name.split("/")[goods.name.split("/").length - 1]}](${REPO_URL + goods.name.replace(/\\/g, "/")})|0|X|X|X|X|X|X|`;
-        }else {
+        } else {
             out += "\n|[" + goods.name.split("/")[goods.name.split("/").length - 1] + "](" + REPO_URL + goods.name.replace(/\\/g, "/") + ")" +
-                "|" + goods.goods.total + " (" + 
+                "|" + goods.goods.total + " (" +
                 (100 * goods.goods.total / ALL_STATS.total).toFixed(1) + "%)" +
                 "|" + goods.goods.code + "|" +
                 (100 * goods.goods.code / goods.goods.total).toFixed(1) + "%" +
@@ -115,9 +128,9 @@ function export_to_file(filename, ALL_DATA, links = {
     });
     out += "\n|Average " +
         "|" + (ALL_STATS.total / ALL_DATA.length).toFixed(1) +
-        "|" + (ALL_STATS.code  / ALL_DATA.length).toFixed(1) +
-        "|X|" + (ALL_STATS.comments  / ALL_DATA.length).toFixed(1) +
-        "|X|" + (ALL_STATS.blanks  / ALL_DATA.length).toFixed(1) + "|X|";
+        "|" + (ALL_STATS.code / ALL_DATA.length).toFixed(1) +
+        "|X|" + (ALL_STATS.comments / ALL_DATA.length).toFixed(1) +
+        "|X|" + (ALL_STATS.blanks / ALL_DATA.length).toFixed(1) + "|X|";
     out += "\n|Total (" + ALL_DATA.length +
         ")|" + ALL_STATS.total +
         "|" + ALL_STATS.code + "|" + (100 * ALL_STATS.code / ALL_STATS.total).toFixed(1) +
@@ -127,22 +140,32 @@ function export_to_file(filename, ALL_DATA, links = {
     fs.writeFileSync(filename, out);
 }
 
+function getLang(file) {
+    for (const lang in LANG_DATA) {
+        if (LANG_DATA[lang].fileExtensions.includes(file.split(".")[file.split(".").length - 1]))
+            return LANG_DATA[lang];
+    }
+    return undefined;
+}
 
 function main() {
-    console.log(process.env);
+    //console.log(process.env);
+
+    LANG_DATA = JSON.parse(fs.readFileSync("Filetypes.json").toString()).langs;
 
     /*logger.debug(os.environ);
     logger.debug(os.environ["INPUT_ROOT_DIR"]);*/
 
-    const test = false;
+    const test = true;
 
     if (!test) {
         settings.root = process.env.INPUT_ROOT_DIR;
         settings["langs"] = process.env.INPUT_LANGS.split("|");
         settings["exclude"] = process.env.INPUT_EXCLUDE.split("|");
         REPO_URL = "https://github.com/" + process.env.GITHUB_REPOSITORY + "/tree/" + process.env.GITHUB_REF.split("/")[2] + "/";
-    }else{
-        settings.root = "src/main/java"
+    } else {
+        settings.root = "src";
+        settings.langs = ["javascript"]
         REPO_URL = "some.website.com";
     }
 
@@ -153,7 +176,11 @@ function main() {
     //logger.debug(REPO_URL);
 
     clean_settings();
-    find_all_java_files();
+    find_all_files();
+    ALL_FILES = ALL_FILES.filter(file =>
+        settings.langs.length === 0 ? getLang(file) !== undefined : getLang(file) !== undefined && settings.langs.includes(getLang(file).name)
+    );
+    ALL_FILES.forEach(filename => console.log(`Found: ${filename}`));
     console.log(`Found ${ALL_FILES.length} files`);
     let ALL_DATA = [];
     ALL_FILES.forEach(fileName => {
