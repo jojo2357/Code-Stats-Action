@@ -21,9 +21,14 @@ function find_all_java_files(dir = settings.root) {
 function read_and_get_the_goods(filename = "") {
     let out = {"total": 0, "blanks": 0, "comments": 0, "code": 0};
     let inBlockComment = false;
-    fs.readFileSync(filename).toString().replace(/\\/g, "/").split('\n').forEach((line, windex) => {
+    const lines = fs.readFileSync(filename).toString().replace(/\\/g, "/").split('\n');
+    lines.forEach((line, windex) => {
         out.total++;
         if (line.trim().length === 0) {
+            if (windex === lines.length) {
+                out.total--;
+                return;
+            }
             out.blanks++;
             return;
         }
