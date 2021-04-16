@@ -105,6 +105,11 @@ function export_to_file(filename, ALL_DATA, links = {
                 (100 * goods.goods.blanks / goods.goods.total).toFixed(1) + "%|";
         }
     });
+    out += "\n|Average " +
+        "|" + (ALL_STATS.total / ALL_DATA.length).toFixed(1) +
+        "|" + (ALL_STATS.code  / ALL_DATA.length).toFixed(1) +
+        "|X|" + (ALL_STATS.comments  / ALL_DATA.length).toFixed(1) +
+        "|X|" + (ALL_STATS.blanks  / ALL_DATA.length).toFixed(1) + "|X|";
     out += "\n|Total (" + ALL_DATA.length +
         ")|" + ALL_STATS.total +
         "|" + ALL_STATS.code + "|" + (100 * ALL_STATS.code / ALL_STATS.total).toFixed(1) +
