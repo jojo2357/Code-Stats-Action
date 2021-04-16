@@ -136,10 +136,7 @@ function main() {
     console.log(`Found ${ALL_FILES.length} files`);
     let ALL_DATA = [];
     ALL_FILES.forEach(fileName => {
-        ALL_DATA.push({"name": fileName.replace(/\\/g, "/"), "goods": read_and_get_the_goods(fileName)});
-    });
-    ALL_FILES.forEach(fileName => {
-        ALL_DATA.push({name: fileName, goods: read_and_get_the_goods(fileName)});
+        ALL_DATA.push({name: fileName.replace(/\\/g, "/"), goods: read_and_get_the_goods(fileName)});
     });
     let out = "File,Lines (% total),Code Lines,% Code,Comment Lines,% Comment,Blank Lines,% Blank";
     ALL_DATA.forEach(goods => {
@@ -147,7 +144,6 @@ function main() {
         ALL_STATS.code += goods.goods.code;
         ALL_STATS.comments += goods.goods.comments;
         ALL_STATS.blanks += goods.goods.blanks;
-        process.stdout.write(goods.name + '\n');
         if (goods.goods.total === 0) {
             out += "\n" + goods.name.split("/")[goods.name.split("/").length - 1] +
                 "," + goods.goods.total + " (" +
@@ -178,7 +174,7 @@ function main() {
     if (!fs.existsSync("Statistics"))
         fs.mkdirSync("Statistics");
 
-    export_to_file("Statistic.md", ALL_DATA.sort((a, b) => a.goods.total - b.goods.total));
+    export_to_file("Statistic.md", ALL_DATA.sort((b, a) => a.goods.total - b.goods.total));
     export_to_file("Statistics/LinesDescending.md", ALL_DATA.sort((b, a) => a.goods.total - b.goods.total), {totallinelink: "Statistics/LinesAscending.md/"});
     export_to_file("Statistics/LinesAscending.md", ALL_DATA.sort((a, b) => a.goods.total - b.goods.total));
 
