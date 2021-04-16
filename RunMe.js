@@ -63,7 +63,7 @@ function clean_settings() {
 }
 
 
-function export_to_file(filename = "", ALL_DATA, totalLines = 0, links = {
+function export_to_file(filename = "", ALL_DATA, links = {
     totallinelink: "Statistics/LinesDescending.md/",
     totalcodelink: "Statistics/CodeDescending.md/",
     propcodelink: "Statistics/ProportionCodeDescending.md/",
@@ -179,26 +179,26 @@ function main() {
         fs.mkdirSync("Statistics");
 
     export_to_file("Statistic.md", ALL_DATA.sort((a, b) => a.goods.total - b.goods.total));
-    export_to_file("Statistics/LinesDescending.md", ALL_DATA.sort((a, b) => a.goods.total - b.goods.total), {totallinelink: "Statistics/LinesAscending.md/"});
-    export_to_file("Statistics/LinesAscending.md", ALL_DATA.sort((a, b) => b.goods.total - a.goods.total));
+    export_to_file("Statistics/LinesDescending.md", ALL_DATA.sort((b, a) => a.goods.total - b.goods.total), {totallinelink: "Statistics/LinesAscending.md/"});
+    export_to_file("Statistics/LinesAscending.md", ALL_DATA.sort((a, b) => a.goods.total - b.goods.total));
 
-    export_to_file("Statistics/CodeDescending.md", ALL_DATA.sort((a, b) => a.goods.code - b.goods.code), {totalcodelink: "Statistics/CodeAscending.md/"});
-    export_to_file("Statistics/CodeAscending.md", ALL_DATA.sort((a, b) => b.goods.code - a.goods.code));
+    export_to_file("Statistics/CodeDescending.md", ALL_DATA.sort((b, a) => a.goods.code - b.goods.code), {totalcodelink: "Statistics/CodeAscending.md/"});
+    export_to_file("Statistics/CodeAscending.md", ALL_DATA.sort((a, b) => a.goods.code - b.goods.code));
 
-    export_to_file("Statistics/BlanksDescending.md", ALL_DATA.sort((a, b) => a.goods.blanks - b.goods.blanks), {totalblanklink: "Statistics/BlanksAscending.md/"});
-    export_to_file("Statistics/BlanksAscending.md", ALL_DATA.sort((a, b) => b.goods.blanks - a.goods.blanks));
+    export_to_file("Statistics/BlanksDescending.md", ALL_DATA.sort((b, a) => a.goods.blanks - b.goods.blanks), {totalblanklink: "Statistics/BlanksAscending.md/"});
+    export_to_file("Statistics/BlanksAscending.md", ALL_DATA.sort((a, b) => a.goods.blanks - b.goods.blanks));
 
-    export_to_file("Statistics/CommentsDescending.md", ALL_DATA.sort((a, b) => a.goods.comments - b.goods.comments), {totalcommentlink: "Statistics/CommentsAscending.md/"});
-    export_to_file("Statistics/CommentsAscending.md", ALL_DATA.sort((a, b) => b.goods.comments - a.goods.comments));
+    export_to_file("Statistics/CommentsDescending.md", ALL_DATA.sort((b, a) => a.goods.comments - b.goods.comments), {totalcommentlink: "Statistics/CommentsAscending.md/"});
+    export_to_file("Statistics/CommentsAscending.md", ALL_DATA.sort((a, b) => a.goods.comments - b.goods.comments));
 
-    export_to_file("Statistics/ProportionCodeDescending.md", ALL_DATA.sort((a, b) => (a.goods.total === 0 ? -1 : a.goods.code / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.code / b.goods.total)), {propcodelink: "Statistics/ProportionCodeAscending.md/"});
-    export_to_file("Statistics/ProportionCodeAscending.md", ALL_DATA.sort((b, a) => (a.goods.total === 0 ? -1 : a.goods.code / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.code / b.goods.total)));
+    export_to_file("Statistics/ProportionCodeDescending.md", ALL_DATA.sort((b, a) => (a.goods.total === 0 ? -1 : a.goods.code / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.code / b.goods.total)), {propcodelink: "Statistics/ProportionCodeAscending.md/"});
+    export_to_file("Statistics/ProportionCodeAscending.md", ALL_DATA.sort((a, b) => (a.goods.total === 0 ? -1 : a.goods.code / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.code / b.goods.total)));
 
-    export_to_file("Statistics/ProportionBlanksDescending.md", ALL_DATA.sort((a, b) => (a.goods.total === 0 ? -1 : a.goods.blanks / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.blanks / b.goods.total)), {propblanklink: "Statistics/ProportionBlanksAscending.md/"});
-    export_to_file("Statistics/ProportionBlanksAscending.md", ALL_DATA.sort((b, a) => (a.goods.total === 0 ? -1 : a.goods.blanks / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.blanks / b.goods.total)));
+    export_to_file("Statistics/ProportionBlanksDescending.md", ALL_DATA.sort((b, a) => (a.goods.total === 0 ? -1 : a.goods.blanks / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.blanks / b.goods.total)), {propblanklink: "Statistics/ProportionBlanksAscending.md/"});
+    export_to_file("Statistics/ProportionBlanksAscending.md", ALL_DATA.sort((a, b) => (a.goods.total === 0 ? -1 : a.goods.blanks / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.blanks / b.goods.total)));
 
-    export_to_file("Statistics/ProportionCommentsDescending.md", ALL_DATA.sort((a, b) => (a.goods.total === 0 ? -1 : a.goods.comments / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.comments / b.goods.total)), {propcommentlink: "Statistics/ProportionCommentsAscending.md/"});
-    export_to_file("Statistics/ProportionCommentsAscending.md", ALL_DATA.sort((b, a) => (a.goods.total === 0 ? -1 : a.goods.comments / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.comments / b.goods.total)));
+    export_to_file("Statistics/ProportionCommentsDescending.md", ALL_DATA.sort((b, a) => (a.goods.total === 0 ? -1 : a.goods.comments / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.comments / b.goods.total)), {propcommentlink: "Statistics/ProportionCommentsAscending.md/"});
+    export_to_file("Statistics/ProportionCommentsAscending.md", ALL_DATA.sort((a, b) => (a.goods.total === 0 ? -1 : a.goods.comments / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.comments / b.goods.total)));
 
     /*print("\nTotal" +
         "," + str(ALL_STATS.total) +
