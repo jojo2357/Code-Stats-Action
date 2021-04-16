@@ -7,6 +7,8 @@ src
 Statistics
 Statistic.csv
 Statistic.md
+RunMe.py
+Dockerfile
 
 .idea
 
