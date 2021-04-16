@@ -75,7 +75,8 @@ function export_to_file(filename, ALL_DATA, links = {
     totalcommentlink: "Statistics/CommentsDescending.md/",
     propcommentlink: "Statistics/ProportionCommentsDescending.md/",
     totalblanklink: "Statistics/BlanksDescending.md/",
-    propblanklink: "Statistics/ProportionBlanksDescending.md/"
+    propblanklink: "Statistics/ProportionBlanksDescending.md/",
+    namelink: "Statistics/NameAscending.md/"
 }) {
     if (!links.totallinelink)
         links.totallinelink = "Statistics/LinesDescending.md/";
@@ -91,22 +92,24 @@ function export_to_file(filename, ALL_DATA, links = {
         links.totalblanklink = "Statistics/BlanksDescending.md/";
     if (!links.propblanklink)
         links.propblanklink = "Statistics/ProportionBlanksDescending.md/";
+    if (!links.namelink)
+        links.namelink = "Statistics/NameAscending.md/";
     console.log(`Exporting to ${filename}`)
     let out = "";
-    out += "\n|File|[Lines (% total)](" + REPO_URL + links.totallinelink + ")|[Code Lines](" + REPO_URL + links.totalcodelink + ")|[% Code](" + REPO_URL + links.propcodelink + ")|[Comment Lines](" + REPO_URL + links.totalcommentlink + ")|[% Comment](" + REPO_URL + links.propcommentlink + ")|[Blank Lines](" + REPO_URL + links.totalblanklink + ")|[% Blank](" + REPO_URL + links.propblanklink + ")|";
+    out += `\n|[File](${REPO_URL + links.namelink})|[Lines (% total)](${REPO_URL + links.totallinelink})|[Code Lines](${REPO_URL + links.totalcodelink})|[% Code](${REPO_URL + links.propcodelink})|[Comment Lines](${REPO_URL + links.totalcommentlink})|[% Comment](${REPO_URL + links.propcommentlink})|[Blank Lines](${REPO_URL + links.totalblanklink})|[% Blank](${REPO_URL + links.propblanklink})|`;
     out += "\n| --- | --- | --- | --- | --- | --- | --- | --- |";
     ALL_DATA.forEach((goods) => {
         if (goods.goods.total === 0) {
-            out += "\n|[" + goods.name.split("/")[goods.name.split("/").length - 1] + "](" + REPO_URL + goods.name.replace(/\\/g, "/") + ")" + "|0|X|X|X|X|X|X|";
+            out += `\n|[${goods.name.split("/")[goods.name.split("/").length - 1]}](${REPO_URL + goods.name.replace(/\\/g, "/")})|0|X|X|X|X|X|X|`;
         }else {
-            out += "\n|" + "[" + goods.name.split("/")[goods.name.split("/").length - 1] + "](" + REPO_URL + goods.name.replace(/\\/g, "/") + ")" +
+            out += "\n|[" + goods.name.split("/")[goods.name.split("/").length - 1] + "](" + REPO_URL + goods.name.replace(/\\/g, "/") + ")" +
                 "|" + goods.goods.total + " (" + 
                 (100 * goods.goods.total / ALL_STATS.total).toFixed(1) + "%)" +
                 "|" + goods.goods.code + "|" +
                 (100 * goods.goods.code / goods.goods.total).toFixed(1) + "%" +
                 "|" + goods.goods.comments + "|" +
                 (100 * goods.goods.comments / goods.goods.total).toFixed(1) + "%" +
-                "|" + goods.goods.blanks + "|" +
+                `|${goods.goods.blanks}|` +
                 (100 * goods.goods.blanks / goods.goods.total).toFixed(1) + "%|";
         }
     });
@@ -130,14 +133,23 @@ function main() {
 
     /*logger.debug(os.environ);
     logger.debug(os.environ["INPUT_ROOT_DIR"]);*/
-    settings.root = process.env.INPUT_ROOT_DIR;
-    settings["langs"] = process.env.INPUT_LANGS.split("|");
-    settings["exclude"] = process.env.INPUT_EXCLUDE.split("|");
+
+    const test = true;
+
+    if (!test) {
+        settings.root = process.env.INPUT_ROOT_DIR;
+        settings["langs"] = process.env.INPUT_LANGS.split("|");
+        settings["exclude"] = process.env.INPUT_EXCLUDE.split("|");
+    }else{
+        settings.root = "src/main/java"
+    }
+
     /*logger.debug(settings);
     logger.debug(data["ref"]);
     logger.debug(data["repository"]["full_name"]);*/
 
-    REPO_URL = "https://github.com/" + process.env.GITHUB_REPOSITORY + "/tree/" + process.env.GITHUB_REF.split("/")[2] + "/";
+    //REPO_URL = "https://github.com/" + process.env.GITHUB_REPOSITORY + "/tree/" + process.env.GITHUB_REF.split("/")[2] + "/";
+    REPO_URL = "some.website.com";
 
     //logger.debug(REPO_URL);
 
@@ -205,6 +217,9 @@ function main() {
 
     export_to_file("Statistics/ProportionCommentsDescending.md", ALL_DATA.sort((b, a) => (a.goods.total === 0 ? -1 : a.goods.comments / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.comments / b.goods.total)), {propcommentlink: "Statistics/ProportionCommentsAscending.md/"});
     export_to_file("Statistics/ProportionCommentsAscending.md", ALL_DATA.sort((a, b) => (a.goods.total === 0 ? -1 : a.goods.comments / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.comments / b.goods.total)));
+
+    export_to_file("Statistics/NameDescending.md", ALL_DATA.sort((b, a) => a.name.split("/")[a.name.split("/").length - 1].localeCompare(b.name.split("/")[b.name.split("/").length - 1])));
+    export_to_file("Statistics/NameAscending.md", ALL_DATA.sort((a, b) => a.name.split("/")[a.name.split("/").length - 1].localeCompare(b.name.split("/")[b.name.split("/").length - 1])), {namelink: "Statistics/NameDescending.md/"});
 
     console.log(ALL_STATS);
     /*print("\nTotal" +
