@@ -110,7 +110,7 @@ function export_to_file(filename, ALL_DATA, links = {
         "|" + ALL_STATS.code + "|" + (100 * ALL_STATS.code / ALL_STATS.total).toFixed(1) +
         "%|" + ALL_STATS.comments + "| " + (100 * ALL_STATS.comments / ALL_STATS.total).toFixed(1) +
         "%|" + ALL_STATS.blanks + "|" + (100 * ALL_STATS.blanks / ALL_STATS.total).toFixed(1) +
-        "%| ";
+        "%|";
     fs.writeFileSync(filename, out);
 }
 
