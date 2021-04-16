@@ -134,7 +134,7 @@ function main() {
     /*logger.debug(os.environ);
     logger.debug(os.environ["INPUT_ROOT_DIR"]);*/
 
-    const test = true;
+    const test = false;
 
     if (!test) {
         settings.root = process.env.INPUT_ROOT_DIR;
