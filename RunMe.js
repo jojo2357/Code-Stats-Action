@@ -63,7 +63,7 @@ function clean_settings() {
 }
 
 
-function export_to_file(filename = "", ALL_DATA, links = {
+function export_to_file(filename, ALL_DATA, links = {
     totallinelink: "Statistics/LinesDescending.md/",
     totalcodelink: "Statistics/CodeDescending.md/",
     propcodelink: "Statistics/ProportionCodeDescending.md/",
@@ -86,7 +86,7 @@ function export_to_file(filename = "", ALL_DATA, links = {
         links.totalblanklink = "Statistics/BlanksDescending.md/";
     if (!links.propblanklink)
         links.propblanklink = "Statistics/ProportionBlanksDescending.md/";
-    fs.writeFileSync(filename, "");
+    console.log(`Exporting to ${filename}`)
     let out = "";
     out += "\n|File|[Lines (% total)](" + REPO_URL + links.totallinelink + ")|[Code Lines](" + REPO_URL + links.totalcodelink + ")|[% Code](" + REPO_URL + links.propcodelink + ")|[Comment Lines](" + REPO_URL + links.totalcommentlink + ")|[% Comment](" + REPO_URL + links.propcommentlink + ")|[Blank Lines](" + REPO_URL + links.totalblanklink + ")|[% Blank](" + REPO_URL + links.propblanklink + ")|";
     out += "\n| --- | --- | --- | --- | --- | --- | --- | --- |";
@@ -200,6 +200,7 @@ function main() {
     export_to_file("Statistics/ProportionCommentsDescending.md", ALL_DATA.sort((b, a) => (a.goods.total === 0 ? -1 : a.goods.comments / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.comments / b.goods.total)), {propcommentlink: "Statistics/ProportionCommentsAscending.md/"});
     export_to_file("Statistics/ProportionCommentsAscending.md", ALL_DATA.sort((a, b) => (a.goods.total === 0 ? -1 : a.goods.comments / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.comments / b.goods.total)));
 
+    console.log(ALL_STATS);
     /*print("\nTotal" +
         "," + str(ALL_STATS.total) +
         "," + str(ALL_STATS.code) + "," +
