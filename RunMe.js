@@ -164,9 +164,9 @@ function export_overview(filename) {
     thing = thing.sort((a, b) => b.stats.total - a.stats.total);
     thing.forEach(item => {
         if (item.name !== "plaintext") {
-            out += `\n|[${item.name}]()|${item.stats.total} (${(100 * item.stats.total / ALL_STATS.total.total).toFixed(1)}%)|${item.stats.code}|${(100 * item.stats.code / item.stats.total).toFixed(1)}%|${item.stats.comments}|${(100 * item.stats.comments / item.stats.total).toFixed(1)}%|${item.stats.blanks}|${(100 * item.stats.blanks / item.stats.total).toFixed(1)}%|`;
+            out += `\n|[${item.name}](${REPO_URL}Statistics/${item.name}/LinesDescending.md)|${item.stats.total} (${(100 * item.stats.total / ALL_STATS.total.total).toFixed(1)}%)|${item.stats.code}|${(100 * item.stats.code / item.stats.total).toFixed(1)}%|${item.stats.comments}|${(100 * item.stats.comments / item.stats.total).toFixed(1)}%|${item.stats.blanks}|${(100 * item.stats.blanks / item.stats.total).toFixed(1)}%|`;
         } else {
-            out += `\n|[${item.name}]()|${item.stats.total} (${(100 * item.stats.total / ALL_STATS.total.total).toFixed(1)}%)|${item.stats.code}|${(100 * item.stats.code / item.stats.total).toFixed(1)}%|X|X|${item.stats.blanks}|${(100 * item.stats.blanks / item.stats.total).toFixed(1)}%|`;
+            out += `\n|${item.name}|${item.stats.total} (${(100 * item.stats.total / ALL_STATS.total.total).toFixed(1)}%)|${item.stats.code}|${(100 * item.stats.code / item.stats.total).toFixed(1)}%|X|X|${item.stats.blanks}|${(100 * item.stats.blanks / item.stats.total).toFixed(1)}%|`;
         }
     });
     fs.writeFileSync(filename, out);
