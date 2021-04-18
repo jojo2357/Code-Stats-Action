@@ -1,12 +1,47 @@
 {
-  "java": {
-    "startSingleComment": "//",
-    "startBlockComment": "/*",
-    "endBlockComment": "*/"
-  },
-  "py": {
-    "startSingleComment": "#",
-    "startBlockComment": "'''",
-    "endBlockComment": "'''"
-  }
+  "langs": [
+    {
+      "name": "plaintext",
+      "fileExtensions": [
+        "txt"
+      ]
+    },
+    {
+      "name": "batch",
+      "startSingleComment": ["rem", "::", "@rem"],
+      "fileExtensions": [
+        "bat"
+      ]
+    },
+    {
+      "name": "java",
+      "startSingleComment": ["//"],
+      "startBlockComment": "/*",
+      "endBlockComment": "*/",
+      "specialIgnores": ["//*"],
+      "fileExtensions": [
+        "java"
+      ]
+    },
+    {
+      "name": "python",
+      "startSingleComment": ["#"],
+      "startBlockComment": "\"\"\"",
+      "endBlockComment": "\"\"\"",
+      "specialIgnores": [],
+      "fileExtensions": [
+        "py"
+      ]
+    },
+    {
+      "name": "javascript",
+      "startSingleComment": ["//"],
+      "startBlockComment": "/*",
+      "endBlockComment": "*/",
+      "specialIgnores": ["//*"],
+      "fileExtensions": [
+        "js"
+      ]
+    }
+  ]
 }
