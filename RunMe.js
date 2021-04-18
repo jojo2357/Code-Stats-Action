@@ -234,18 +234,14 @@ function main() {
         REPO_URL = "https://github.com/" + process.env.GITHUB_REPOSITORY + "/tree/" + process.env.GITHUB_REF.split("/")[2] + "/";
     } else {
         settings.root = "src";
-        settings.langs = ["javascript", "python", "java", "plaintext", "batch"];
+        settings.langs = [];//["javascript", "python", "java", "plaintext", "batch"];
         REPO_URL = "some.website.com";
     }
 
-    /*logger.debug(settings);
-    logger.debug(data["ref"]);
-    logger.debug(data["repository"]["full_name"]);*/
-
-    //logger.debug(REPO_URL);
-
     clean_settings();
     find_all_files();
+    console.log(settings);
+    console.log(`Found ${ALL_FILES.length} prefilter`);
     ALL_FILES = ALL_FILES.filter(file =>
         settings.langs.length === 0 ? getLang(file) !== undefined : getLang(file) !== undefined && settings.langs.includes(getLang(file).name)
     );
