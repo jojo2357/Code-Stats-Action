@@ -3,7 +3,7 @@ const path = require("path");
 
 let REPO_URL = "";
 let settings = {root: "", exclude: [], langs: [], seperateLangs: false};
-let ALL_STATS = {"total" :{total: 0, blanks: 0, comments: 0, code: 0, count: 0}};//{total: 0, blanks: 0, comments: 0, code: 0};
+let ALL_STATS = {"total": {total: 0, blanks: 0, comments: 0, code: 0, count: 0}};//{total: 0, blanks: 0, comments: 0, code: 0};
 let ALL_FILES = [];
 let referencedLangs;
 
@@ -23,8 +23,13 @@ function read_and_get_the_goods(filename = "") {
     let out = {"total": 0, "blanks": 0, "comments": 0, "code": 0};
     let inBlockComment = false;
     let justStartedABlock;
-    const lang = getLang(filename)
-    const langConfig = {singleLine: lang.startSingleComment, blockStart: lang.startBlockComment, blockEnd: lang.endBlockComment, ignores: lang.specialIgnores}
+    const lang = getLang(filename);
+    const langConfig = {
+        singleLine: lang.startSingleComment,
+        blockStart: lang.startBlockComment,
+        blockEnd: lang.endBlockComment,
+        ignores: lang.specialIgnores
+    };
     const lines = fs.readFileSync(filename).toString().replace(/\\/g, "/").split('\n');
     lines.forEach((line, windex) => {
         out.total++;
@@ -65,7 +70,7 @@ function read_and_get_the_goods(filename = "") {
     return out;
 }
 
-function lineHasTheSpecial(line = "", specials = [""]){
+function lineHasTheSpecial(line = "", specials = [""]) {
     for (var special in specials)
         if (line.includes(specials[special]))
             return true;
@@ -151,15 +156,15 @@ function getLang(file) {
 }
 
 function export_overview(filename) {
-    let out = "|Lang (# files)|Lines (% total)|Code Lines|% Code|Comment Lines|% Comments|Blank Lines|% Blank|"
+    let out = "|Lang (# files)|Lines (% total)|Code Lines|% Code|Comment Lines|% Comments|Blank Lines|% Blank|";
     out += "\n| --- | --- | --- | --- | --- | --- | --- | --- |";
     let thing = [];
     referencedLangs.forEach(lang => lang !== "total" && thing.push({name: lang, stats: ALL_STATS[lang]}));
-    thing = thing.sort((a,b) => b.stats.total - a.stats.total);
+    thing = thing.sort((a, b) => b.stats.total - a.stats.total);
     thing.forEach(item => {
         if (item.name !== "plaintext") {
             out += `\n|[${item.name}]()|${item.stats.total} (${(100 * item.stats.total / ALL_STATS.total.total).toFixed(1)}%)|${item.stats.code}|${(100 * item.stats.code / item.stats.total).toFixed(1)}%|${item.stats.comments}|${(100 * item.stats.comments / item.stats.total).toFixed(1)}%|${item.stats.blanks}|${(100 * item.stats.blanks / item.stats.total).toFixed(1)}%|`;
-        }else {
+        } else {
             out += `\n|[${item.name}]()|${item.stats.total} (${(100 * item.stats.total / ALL_STATS.total.total).toFixed(1)}%)|${item.stats.code}|${(100 * item.stats.code / item.stats.total).toFixed(1)}%|X|X|${item.stats.blanks}|${(100 * item.stats.blanks / item.stats.total).toFixed(1)}%|`;
         }
     });
@@ -169,7 +174,53 @@ function export_overview(filename) {
 function main() {
     //console.log(process.env);
 
-    LANG_DATA = JSON.parse(fs.readFileSync("Filetypes.json").toString()).langs;
+    LANG_DATA = {
+        "langs": [
+            {
+                "name": "plaintext",
+                "fileExtensions": [
+                    "txt"
+                ]
+            },
+            {
+                "name": "batch",
+                "startSingleComment": ["rem", "::", "@rem"],
+                "fileExtensions": [
+                    "bat"
+                ]
+            },
+            {
+                "name": "java",
+                "startSingleComment": ["//"],
+                "startBlockComment": "/*",
+                "endBlockComment": "*/",
+                "specialIgnores": ["//*"],
+                "fileExtensions": [
+                    "java"
+                ]
+            },
+            {
+                "name": "python",
+                "startSingleComment": ["#"],
+                "startBlockComment": "\"\"\"",
+                "endBlockComment": "\"\"\"",
+                "specialIgnores": [],
+                "fileExtensions": [
+                    "py"
+                ]
+            },
+            {
+                "name": "javascript",
+                "startSingleComment": ["//"],
+                "startBlockComment": "/*",
+                "endBlockComment": "*/",
+                "specialIgnores": ["//*"],
+                "fileExtensions": [
+                    "js"
+                ]
+            }
+        ]
+    }.langs;
 
     /*logger.debug(os.environ);
     logger.debug(os.environ["INPUT_ROOT_DIR"]);*/
@@ -202,7 +253,7 @@ function main() {
     ALL_FILES.forEach(file => {
         if (!referencedLangs.includes(getLang(file).name))
             referencedLangs.push(getLang(file).name);
-    })
+    });
     ALL_FILES.forEach(filename => console.log(`Found: ${filename}`));
     console.log(`Found ${ALL_FILES.length} files`);
     let ALL_DATA = [];
@@ -216,7 +267,7 @@ function main() {
         ALL_STATS["total"].comments += goods.goods.comments;
         ALL_STATS["total"].blanks += goods.goods.blanks;
         ALL_STATS["total"].count++;
-        const langName = getLang(goods.name).name
+        const langName = getLang(goods.name).name;
         if (!ALL_STATS[langName]) {
             ALL_STATS[langName] = {total: 0, blanks: 0, comments: 0, code: 0, count: 0};
         }
