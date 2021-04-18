@@ -86,6 +86,7 @@ function clean_settings() {
         settings.root += "/";
     }
     settings.exclude = settings.exclude.filter(dir => dir !== "");
+    settings.langs = settings.langs.filter(dir => dir !== "");
 }
 
 function export_to_file(filename, ALL_DATA, lang, links = {
