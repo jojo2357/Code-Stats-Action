@@ -60,7 +60,7 @@ function read_and_get_the_goods(filename = "") {
             return;
         }
         for (var comment in langConfig.singleLine) {
-            if (line.trim().substr(0, langConfig.singleLine[comment].length) === comment) {
+            if (line.trim().substr(0, langConfig.singleLine[comment].length) === langConfig.singleLine[comment]) {
                 out.comments++;
                 return;
             }
@@ -226,7 +226,7 @@ function main() {
     /*logger.debug(os.environ);
     logger.debug(os.environ["INPUT_ROOT_DIR"]);*/
 
-    const test = false;
+    const test = true;
 
     if (!test) {
         settings.root = process.env.INPUT_ROOT_DIR;
