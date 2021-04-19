@@ -117,13 +117,13 @@ function export_to_file(filename, ALL_DATA, lang, links = {
         links.namelink = `Statistics/${lang}/NameAscending.md/`;
     console.log(`Exporting to ${filename}`);
     let out = "";
-    out += `\n|[File](${REPO_URL + links.namelink})|[Lines (% total)](${REPO_URL + links.totallinelink})|[Code Lines](${REPO_URL + links.totalcodelink})|[% Code](${REPO_URL + links.propcodelink})|[Comment Lines](${REPO_URL + links.totalcommentlink})|[% Comment](${REPO_URL + links.propcommentlink})|[Blank Lines](${REPO_URL + links.totalblanklink})|[% Blank](${REPO_URL + links.propblanklink})|`;
+    out += `\n|[File](${encodeURI(REPO_URL + links.namelink)})|[Lines (% total)](${encodeURI(REPO_URL + links.totallinelink)})|[Code Lines](${encodeURI(REPO_URL + links.totalcodelink)})|[% Code](${encodeURI(REPO_URL + links.propcodelink)})|[Comment Lines](${encodeURI(REPO_URL + links.totalcommentlink)})|[% Comment](${encodeURI(REPO_URL + links.propcommentlink)})|[Blank Lines](${encodeURI(REPO_URL + links.totalblanklink)})|[% Blank](${encodeURI(REPO_URL + links.propblanklink)})|`;
     out += "\n| --- | --- | --- | --- | --- | --- | --- | --- |";
     ALL_DATA.forEach((goods) => {
         if (goods.goods.total === 0) {
-            out += `\n|[${goods.name.split("/")[goods.name.split("/").length - 1]}](${REPO_URL + goods.name.replace(/\\/g, "/")})|0|X|X|X|X|X|X|`;
+            out += `\n|[${goods.name.split("/")[goods.name.split("/").length - 1]}](${encodeURI(REPO_URL + goods.name.replace(/\\/g, "/"))})|0|X|X|X|X|X|X|`;
         } else {
-            out += "\n|[" + goods.name.split("/")[goods.name.split("/").length - 1] + "](" + REPO_URL + goods.name.replace(/\\/g, "/") + ")" +
+            out += "\n|[" + goods.name.split("/")[goods.name.split("/").length - 1] + "](" + encodeURI(REPO_URL + goods.name.replace(/\\/g, "/")) + ")" +
                 "|" + goods.goods.total + " (" +
                 (100 * goods.goods.total / ALL_STATS[lang].total).toFixed(1) + "%)" +
                 "|" + goods.goods.code + "|" +
@@ -164,9 +164,9 @@ function export_overview(filename) {
     thing = thing.sort((a, b) => b.stats.total - a.stats.total);
     thing.forEach(item => {
         if (item.name !== "plaintext") {
-            out += `\n|[${item.name}](${REPO_URL}Statistics/${item.name}/LinesDescending.md) (${item.stats.count})|${item.stats.total} (${(100 * item.stats.total / ALL_STATS.total.total).toFixed(1)}%)|${item.stats.code}|${(100 * item.stats.code / item.stats.total).toFixed(1)}%|${item.stats.comments}|${(100 * item.stats.comments / item.stats.total).toFixed(1)}%|${item.stats.blanks}|${(100 * item.stats.blanks / item.stats.total).toFixed(1)}%|`;
+            out += `\n|[${item.name}](${REPO_URL}Statistics/${encodeURI(item.name)}/LinesDescending.md) (${item.stats.count})|${item.stats.total} (${(100 * item.stats.total / ALL_STATS.total.total).toFixed(1)}%)|${item.stats.code}|${(100 * item.stats.code / item.stats.total).toFixed(1)}%|${item.stats.comments}|${(100 * item.stats.comments / item.stats.total).toFixed(1)}%|${item.stats.blanks}|${(100 * item.stats.blanks / item.stats.total).toFixed(1)}%|`;
         } else {
-            out += `\n|[${item.name}](${REPO_URL}Statistics/${item.name}/LinesDescending.md) (${item.stats.count})|${item.stats.total} (${(100 * item.stats.total / ALL_STATS.total.total).toFixed(1)}%)|${item.stats.code}|${(100 * item.stats.code / item.stats.total).toFixed(1)}%|X|X|${item.stats.blanks}|${(100 * item.stats.blanks / item.stats.total).toFixed(1)}%|`;
+            out += `\n|[${item.name}](${REPO_URL}Statistics/${encodeURI(item.name)}/LinesDescending.md) (${item.stats.count})|${item.stats.total} (${(100 * item.stats.total / ALL_STATS.total.total).toFixed(1)}%)|${item.stats.code}|${(100 * item.stats.code / item.stats.total).toFixed(1)}%|X|X|${item.stats.blanks}|${(100 * item.stats.blanks / item.stats.total).toFixed(1)}%|`;
         }
     });
     fs.writeFileSync(filename, out);
