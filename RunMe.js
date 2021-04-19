@@ -117,13 +117,13 @@ function export_to_file(filename, ALL_DATA, lang, links = {
         links.namelink = `Statistics/${lang}/NameAscending.md/`;
     console.log(`Exporting to ${filename}`);
     let out = "";
-    out += `\n|[File](${encodeURIComponent(REPO_URL + links.namelink)})|[Lines (% total)](${encodeURIComponent(REPO_URL + links.totallinelink)})|[Code Lines](${encodeURIComponent(REPO_URL + links.totalcodelink)})|[% Code](${encodeURIComponent(REPO_URL + links.propcodelink)})|[Comment Lines](${encodeURIComponent(REPO_URL + links.totalcommentlink)})|[% Comment](${encodeURIComponent(REPO_URL + links.propcommentlink)})|[Blank Lines](${encodeURIComponent(REPO_URL + links.totalblanklink)})|[% Blank](${encodeURIComponent(REPO_URL + links.propblanklink)})|`;
+    out += `\n|[File](${REPO_URL + encodeURIComponent(links.namelink)})|[Lines (% total)](${REPO_URL + encodeURIComponent(links.totallinelink)})|[Code Lines](${REPO_URL + encodeURIComponent(links.totalcodelink)})|[% Code](${REPO_URL + encodeURIComponent(links.propcodelink)})|[Comment Lines](${REPO_URL + encodeURIComponent(links.totalcommentlink)})|[% Comment](${REPO_URL + encodeURIComponent(links.propcommentlink)})|[Blank Lines](${REPO_URL + encodeURIComponent(links.totalblanklink)})|[% Blank](${REPO_URL + encodeURIComponent(links.propblanklink)})|`;
     out += "\n| --- | --- | --- | --- | --- | --- | --- | --- |";
     ALL_DATA.forEach((goods) => {
         if (goods.goods.total === 0) {
-            out += `\n|[${goods.name.split("/")[goods.name.split("/").length - 1]}](${encodeURIComponent(REPO_URL + goods.name.replace(/\\/g, "/"))})|0|X|X|X|X|X|X|`;
+            out += `\n|[${goods.name.split("/")[goods.name.split("/").length - 1]}](${REPO_URL + encodeURIComponent(goods.name.replace(/\\/g, "/"))})|0|X|X|X|X|X|X|`;
         } else {
-            out += "\n|[" + goods.name.split("/")[goods.name.split("/").length - 1] + "](" + encodeURIComponent(REPO_URL + goods.name.replace(/\\/g, "/")) + ")" +
+            out += "\n|[" + goods.name.split("/")[goods.name.split("/").length - 1] + "](" + REPO_URL + encodeURIComponent(goods.name.replace(/\\/g, "/")) + ")" +
                 "|" + goods.goods.total + " (" +
                 (100 * goods.goods.total / ALL_STATS[lang].total).toFixed(1) + "%)" +
                 "|" + goods.goods.code + "|" +
