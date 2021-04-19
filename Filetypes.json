@@ -8,24 +8,43 @@
     },
     {
       "name": "batch",
-      "startSingleComment": ["rem", "::", "@rem"],
+      "startSingleComment": [
+        "rem",
+        "::",
+        "@rem"
+      ],
       "fileExtensions": [
         "bat"
       ]
     },
     {
+      "name": "bash",
+      "startSingleComment": [
+        "#"
+      ],
+      "fileExtensions": [
+        "sh"
+      ]
+    },
+    {
       "name": "java",
-      "startSingleComment": ["//"],
+      "startSingleComment": [
+        "//"
+      ],
       "startBlockComment": "/*",
       "endBlockComment": "*/",
-      "specialIgnores": ["//*"],
+      "specialIgnores": [
+        "//*"
+      ],
       "fileExtensions": [
         "java"
       ]
     },
     {
       "name": "python",
-      "startSingleComment": ["#"],
+      "startSingleComment": [
+        "#"
+      ],
       "startBlockComment": "\"\"\"",
       "endBlockComment": "\"\"\"",
       "specialIgnores": [],
@@ -35,12 +54,46 @@
     },
     {
       "name": "javascript",
-      "startSingleComment": ["//"],
+      "startSingleComment": [
+        "//"
+      ],
       "startBlockComment": "/*",
       "endBlockComment": "*/",
-      "specialIgnores": ["//*"],
+      "specialIgnores": [
+        "//*"
+      ],
       "fileExtensions": [
         "js"
+      ]
+    },
+    {
+      "name": "c#",
+      "startSingleComment": [
+        "//"
+      ],
+      "startBlockComment": "/*",
+      "endBlockComment": "*/",
+      "specialIgnores": [
+        "//*"
+      ],
+      "fileExtensions": [
+        "cs"
+      ]
+    },
+    {
+      "name": "c/c++",
+      "startSingleComment": [
+        "//"
+      ],
+      "startBlockComment": "/*",
+      "endBlockComment": "*/",
+      "specialIgnores": [
+        "//*"
+      ],
+      "fileExtensions": [
+        "c",
+        "cpp",
+        "h"
       ]
     }
   ]

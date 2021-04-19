@@ -191,6 +191,13 @@ function main() {
                 ]
             },
             {
+                "name": "bash",
+                "startSingleComment": ["#"],
+                "fileExtensions": [
+                    "sh"
+                ]
+            },
+            {
                 "name": "java",
                 "startSingleComment": ["//"],
                 "startBlockComment": "/*",
@@ -219,7 +226,27 @@ function main() {
                 "fileExtensions": [
                     "js"
                 ]
-            }
+            },
+            {
+                "name": "c#",
+                "startSingleComment": ["//"],
+                "startBlockComment": "/*",
+                "endBlockComment": "*/",
+                "specialIgnores": ["//*"],
+                "fileExtensions": [
+                    "cs"
+                ]
+            },
+            {
+                "name": "c/c++",
+                "startSingleComment": ["//"],
+                "startBlockComment": "/*",
+                "endBlockComment": "*/",
+                "specialIgnores": ["//*"],
+                "fileExtensions": [
+                    "c", "cpp", "h",
+                ]
+            },
         ]
     }.langs;
 
