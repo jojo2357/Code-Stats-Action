@@ -71,7 +71,7 @@ function read_and_get_the_goods(filename = "") {
 }
 
 function lineHasTheSpecial(line = "", specials = [""]) {
-    for (var special in specials)
+    for (var special in specials.filter(special => special.length > 0))
         if (line.includes(specials[special]))
             return true;
     return false;
@@ -259,7 +259,7 @@ function main() {
     /*logger.debug(os.environ);
     logger.debug(os.environ["INPUT_ROOT_DIR"]);*/
 
-    const test = false;
+    const test = process.env.INPUT_ROOT_DIR === undefined;
 
     if (!test) {
         settings.root = process.env.INPUT_ROOT_DIR;
