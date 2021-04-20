@@ -9,7 +9,7 @@ Still under development, supports multiple languages including java, python and 
 Add this action to your workflow. Example:
 ```
      - name: Code_Stats
-        uses: jojo2357/CodeStats@0.3.0
+        uses: jojo2357/CodeStats@0.4.0
         with:
           root_dir: 'com/github/jojo2357'
           exclude: 'test'
