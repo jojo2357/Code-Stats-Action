@@ -206,6 +206,14 @@ function main() {
                 ]
             },
             {
+                "name": "html",
+                "startBlockComment": "<!--",
+                "endBlockComment": "-->",
+                "fileExtensions": [
+                    "html"
+                ]
+            },
+            {
                 "name": "python",
                 "startSingleComment": ["#"],
                 "startBlockComment": "\"\"\"",
