@@ -90,31 +90,31 @@ function clean_settings() {
 }
 
 function export_to_file(filename, ALL_DATA, lang, links = {
-    totallinelink: `Statistics/${lang}/LinesDescending.md/`,
-    totalcodelink: `Statistics/${lang}/CodeDescending.md/`,
-    propcodelink: `Statistics/${lang}/ProportionCodeDescending.md/`,
-    totalcommentlink: `Statistics/${lang}/CommentsDescending.md/`,
-    propcommentlink: `Statistics/${lang}/ProportionCommentsDescending.md/`,
-    totalblanklink: `Statistics/${lang}/BlanksDescending.md/`,
-    propblanklink: `Statistics/${lang}/ProportionBlanksDescending.md/`,
-    namelink: `Statistics/${lang}/NameAscending.md/`
+    totallinelink: `statistics/${lang}/lines_descending.md/`,
+    totalcodelink: `statistics/${lang}/code_descending.md/`,
+    propcodelink: `statistics/${lang}/proportion_code_descending.md/`,
+    totalcommentlink: `statistics/${lang}/comments_descending.md/`,
+    propcommentlink: `statistics/${lang}/proportion_comments_descending.md/`,
+    totalblanklink: `statistics/${lang}/blanks_descending.md/`,
+    propblanklink: `statistics/${lang}/proportion_blanks_descending.md/`,
+    namelink: `statistics/${lang}/name_ascending.md/`
 }) {
     if (!links.totallinelink)
-        links.totallinelink = `Statistics/${lang}/LinesDescending.md/`;
+        links.totallinelink = `statistics/${lang}/lines_descending.md/`;
     if (!links.totalcodelink)
-        links.totalcodelink = `Statistics/${lang}/CodeDescending.md/`;
+        links.totalcodelink = `statistics/${lang}/code_descending.md/`;
     if (!links.propcodelink)
-        links.propcodelink = `Statistics/${lang}/ProportionCodeDescending.md/`;
+        links.propcodelink = `statistics/${lang}/proportion_code_descending.md/`;
     if (!links.totalcommentlink)
-        links.totalcommentlink = `Statistics/${lang}/CommentsDescending.md/`;
+        links.totalcommentlink = `statistics/${lang}/comments_descending.md/`;
     if (!links.propcommentlink)
-        links.propcommentlink = `Statistics/${lang}/ProportionCommentsDescending.md/`;
+        links.propcommentlink = `statistics/${lang}/proportion_comments_descending.md/`;
     if (!links.totalblanklink)
-        links.totalblanklink = `Statistics/${lang}/BlanksDescending.md/`;
+        links.totalblanklink = `statistics/${lang}/blanks_descending.md/`;
     if (!links.propblanklink)
-        links.propblanklink = `Statistics/${lang}/ProportionBlanksDescending.md/`;
+        links.propblanklink = `statistics/${lang}/proportion_blanks_descending.md/`;
     if (!links.namelink)
-        links.namelink = `Statistics/${lang}/NameAscending.md/`;
+        links.namelink = `statistics/${lang}/name_ascending.md/`;
     console.log(`Exporting to ${filename}`);
     let out = "";
     out += `\n|[File](${REPO_URL + encodeURIComponent(links.namelink)})|[Lines (% total)](${REPO_URL + encodeURIComponent(links.totallinelink)})|[Code Lines](${REPO_URL + encodeURIComponent(links.totalcodelink)})|[% Code](${REPO_URL + encodeURIComponent(links.propcodelink)})|[Comment Lines](${REPO_URL + encodeURIComponent(links.totalcommentlink)})|[% Comment](${REPO_URL + encodeURIComponent(links.propcommentlink)})|[Blank Lines](${REPO_URL + encodeURIComponent(links.totalblanklink)})|[% Blank](${REPO_URL + encodeURIComponent(links.propblanklink)})|`;
@@ -164,9 +164,9 @@ function export_overview(filename) {
     thing = thing.sort((a, b) => b.stats.total - a.stats.total);
     thing.forEach(item => {
         if (item.name !== "plaintext") {
-            out += `\n|[${item.name}](${REPO_URL}Statistics/${encodeURIComponent(item.name)}/LinesDescending.md) (${item.stats.count})|${item.stats.total} (${(100 * item.stats.total / ALL_STATS.total.total).toFixed(1)}%)|${item.stats.code}|${(100 * item.stats.code / item.stats.total).toFixed(1)}%|${item.stats.comments}|${(100 * item.stats.comments / item.stats.total).toFixed(1)}%|${item.stats.blanks}|${(100 * item.stats.blanks / item.stats.total).toFixed(1)}%|`;
+            out += `\n|[${item.name}](${REPO_URL}statistics/${encodeURIComponent(item.name)}/lines_descending.md) (${item.stats.count})|${item.stats.total} (${(100 * item.stats.total / ALL_STATS.total.total).toFixed(1)}%)|${item.stats.code}|${(100 * item.stats.code / item.stats.total).toFixed(1)}%|${item.stats.comments}|${(100 * item.stats.comments / item.stats.total).toFixed(1)}%|${item.stats.blanks}|${(100 * item.stats.blanks / item.stats.total).toFixed(1)}%|`;
         } else {
-            out += `\n|[${item.name}](${REPO_URL}Statistics/${encodeURIComponent(item.name)}/LinesDescending.md) (${item.stats.count})|${item.stats.total} (${(100 * item.stats.total / ALL_STATS.total.total).toFixed(1)}%)|${item.stats.code}|${(100 * item.stats.code / item.stats.total).toFixed(1)}%|X|X|${item.stats.blanks}|${(100 * item.stats.blanks / item.stats.total).toFixed(1)}%|`;
+            out += `\n|[${item.name}](${REPO_URL}statistics/${encodeURIComponent(item.name)}/lines_descending.md) (${item.stats.count})|${item.stats.total} (${(100 * item.stats.total / ALL_STATS.total.total).toFixed(1)}%)|${item.stats.code}|${(100 * item.stats.code / item.stats.total).toFixed(1)}%|X|X|${item.stats.blanks}|${(100 * item.stats.blanks / item.stats.total).toFixed(1)}%|`;
         }
     });
     fs.writeFileSync(filename, out);
@@ -331,38 +331,39 @@ function main() {
             "," + ALL_STATS.total.comments + "," + (ALL_STATS.total.comments / ALL_STATS.total.total).toFixed(1) +
             "," + ALL_STATS.total.blanks + "," + (ALL_STATS.total.blanks / ALL_STATS.total.total).toFixed(1);
     }
-    fs.writeFileSync("Statistic.csv", out);
+    fs.writeFileSync("statistic.csv", out);
 
-    if (!fs.existsSync("Statistics"))
-        fs.mkdirSync("Statistics");
+    if (!fs.existsSync("statistics"))
+        fs.mkdirSync("statistics");
 
-    export_overview("Statistic.md");
+    export_overview("statistic.md");
     referencedLangs.forEach(lang => {
-        if (!fs.existsSync(`Statistics/${lang}`))
-            fs.mkdirSync(`Statistics/${lang}`);
-        export_to_file(`Statistics/${lang}/LinesDescending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((b, a) => a.goods.total - b.goods.total), lang, {totallinelink: `Statistics/${lang}/LinesAscending.md/`});
-        export_to_file(`Statistics/${lang}/LinesAscending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((a, b) => a.goods.total - b.goods.total), lang);
+        if (!fs.existsSync(`statistics/${lang}`))
+            fs.mkdirSync(`statistics/${lang}`);
 
-        export_to_file(`Statistics/${lang}/CodeDescending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((b, a) => a.goods.code - b.goods.code), lang, {totalcodelink: `Statistics/${lang}/CodeAscending.md/`});
-        export_to_file(`Statistics/${lang}/CodeAscending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((a, b) => a.goods.code - b.goods.code), lang);
+        export_to_file(`statistics/${lang}/lines_descending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((b, a) => a.goods.total - b.goods.total), lang, {totallinelink: `statistics/${lang}/lines_ascending.md/`});
+        export_to_file(`statistics/${lang}/lines_ascending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((a, b) => a.goods.total - b.goods.total), lang);
 
-        export_to_file(`Statistics/${lang}/BlanksDescending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((b, a) => a.goods.blanks - b.goods.blanks), lang, {totalblanklink: `Statistics/${lang}/BlanksAscending.md/`});
-        export_to_file(`Statistics/${lang}/BlanksAscending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((a, b) => a.goods.blanks - b.goods.blanks), lang);
+        export_to_file(`statistics/${lang}/code_descending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((b, a) => a.goods.code - b.goods.code), lang, {totalcodelink: `statistics/${lang}/code_ascending.md/`});
+        export_to_file(`statistics/${lang}/code_ascending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((a, b) => a.goods.code - b.goods.code), lang);
 
-        export_to_file(`Statistics/${lang}/CommentsDescending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((b, a) => a.goods.comments - b.goods.comments), lang, {totalcommentlink: `Statistics/${lang}/CommentsAscending.md/`});
-        export_to_file(`Statistics/${lang}/CommentsAscending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((a, b) => a.goods.comments - b.goods.comments), lang);
+        export_to_file(`statistics/${lang}/blanks_descending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((b, a) => a.goods.blanks - b.goods.blanks), lang, {totalblanklink: `statistics/${lang}/blanks_ascending.md/`});
+        export_to_file(`statistics/${lang}/blanks_ascending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((a, b) => a.goods.blanks - b.goods.blanks), lang);
 
-        export_to_file(`Statistics/${lang}/ProportionCodeDescending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((b, a) => (a.goods.total === 0 ? -1 : a.goods.code / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.code / b.goods.total)), lang, {propcodelink: `Statistics/${lang}/ProportionCodeAscending.md/`});
-        export_to_file(`Statistics/${lang}/ProportionCodeAscending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((a, b) => (a.goods.total === 0 ? -1 : a.goods.code / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.code / b.goods.total)), lang);
+        export_to_file(`statistics/${lang}/comments_descending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((b, a) => a.goods.comments - b.goods.comments), lang, {totalcommentlink: `statistics/${lang}/comments_ascending.md/`});
+        export_to_file(`statistics/${lang}/comments_ascending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((a, b) => a.goods.comments - b.goods.comments), lang);
 
-        export_to_file(`Statistics/${lang}/ProportionBlanksDescending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((b, a) => (a.goods.total === 0 ? -1 : a.goods.blanks / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.blanks / b.goods.total)), lang, {propblanklink: `Statistics/${lang}/ProportionBlanksAscending.md/`});
-        export_to_file(`Statistics/${lang}/ProportionBlanksAscending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((a, b) => (a.goods.total === 0 ? -1 : a.goods.blanks / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.blanks / b.goods.total)), lang);
+        export_to_file(`statistics/${lang}/proportion_code_descending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((b, a) => (a.goods.total === 0 ? -1 : a.goods.code / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.code / b.goods.total)), lang, {propcodelink: `statistics/${lang}/proportion_code_ascending.md/`});
+        export_to_file(`statistics/${lang}/proportion_code_ascending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((a, b) => (a.goods.total === 0 ? -1 : a.goods.code / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.code / b.goods.total)), lang);
 
-        export_to_file(`Statistics/${lang}/ProportionCommentsDescending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((b, a) => (a.goods.total === 0 ? -1 : a.goods.comments / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.comments / b.goods.total)), lang, {propcommentlink: `Statistics/${lang}/ProportionCommentsAscending.md/`});
-        export_to_file(`Statistics/${lang}/ProportionCommentsAscending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((a, b) => (a.goods.total === 0 ? -1 : a.goods.comments / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.comments / b.goods.total)), lang);
+        export_to_file(`statistics/${lang}/proportion_blanks_descending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((b, a) => (a.goods.total === 0 ? -1 : a.goods.blanks / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.blanks / b.goods.total)), lang, {propblanklink: `statistics/${lang}/proportion_blanks_ascending.md/`});
+        export_to_file(`statistics/${lang}/proportion_blanks_ascending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((a, b) => (a.goods.total === 0 ? -1 : a.goods.blanks / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.blanks / b.goods.total)), lang);
 
-        export_to_file(`Statistics/${lang}/NameDescending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((b, a) => a.name.split(`/`)[a.name.split(`/`).length - 1].localeCompare(b.name.split(`/`)[b.name.split(`/`).length - 1])), lang);
-        export_to_file(`Statistics/${lang}/NameAscending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((a, b) => a.name.split(`/`)[a.name.split(`/`).length - 1].localeCompare(b.name.split(`/`)[b.name.split(`/`).length - 1])), lang, {namelink: `Statistics/${lang}/NameDescending.md/`});
+        export_to_file(`statistics/${lang}/proportion_comments_descending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((b, a) => (a.goods.total === 0 ? -1 : a.goods.comments / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.comments / b.goods.total)), lang, {propcommentlink: `statistics/${lang}/proportion_comments_ascending.md/`});
+        export_to_file(`statistics/${lang}/proportion_comments_ascending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((a, b) => (a.goods.total === 0 ? -1 : a.goods.comments / a.goods.total) - (b.goods.total === 0 ? -1 : b.goods.comments / b.goods.total)), lang);
+
+        export_to_file(`statistics/${lang}/name_descending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((b, a) => a.name.split(`/`)[a.name.split(`/`).length - 1].localeCompare(b.name.split(`/`)[b.name.split(`/`).length - 1])), lang);
+        export_to_file(`statistics/${lang}/name_ascending.md`, ALL_DATA.filter(thing => getLang(thing.name).name === lang || lang === "total").sort((a, b) => a.name.split(`/`)[a.name.split(`/`).length - 1].localeCompare(b.name.split(`/`)[b.name.split(`/`).length - 1])), lang, {namelink: `statistics/${lang}/name_descending.md/`});
     });
 
     console.log(ALL_STATS);
