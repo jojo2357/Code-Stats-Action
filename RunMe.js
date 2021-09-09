@@ -244,7 +244,7 @@ function main() {
                 ]
             },
             {
-                "name": "c/c++",
+                "name": "c-c++",
                 "startSingleComment": ["//"],
                 "startBlockComment": "/*",
                 "endBlockComment": "*/",
