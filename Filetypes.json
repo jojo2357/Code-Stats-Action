@@ -81,7 +81,7 @@
       ]
     },
     {
-      "name": "c/c++",
+      "name": "c-c++",
       "startSingleComment": [
         "//"
       ],
